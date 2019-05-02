@@ -73,7 +73,7 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
         
         // 사용할 MLModel을 결정해준다.
         
-        guard let model = try? VNCoreMLModel(for: Resnet50().model) else { return }
+        guard let model = try? VNCoreMLModel(for: Advanced().model) else { return }
         
         
         //An image analysis request that uses a Core ML model to process images.
