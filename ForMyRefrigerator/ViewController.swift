@@ -11,7 +11,7 @@ import AVKit
 import Vision
 
 class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDelegate {
-
+    
     // Methods for receiving sample buffers from and monitoring the status of a video data output.
     // AVCaputreVideoDataOutputSampleBufferDelegate는 샘플 버퍼를 위한 메소드와 비디오 데이터 아웃풋의 상태를 모니터링함.
     var rootLayer: CALayer! = nil
@@ -24,8 +24,8 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
     var hasIngredient : [String] = []
     var Str = ""
     
-    var ingredient : [String : String] = ["Onion":"양파", "Egg":"달걀", "Green Onion":"대파", "Hairtail":"갈치", "Kimchi":"김치", "Mackerel" :"고등어", "Meat":"소고기", "Milk":"우유", "Pork":"돼지고기", "Red Pepper Paste": "고추장", "Soybean":"된장", "Tofu":"두부"]
-    
+    var ingredient : [String : String] = ["Onion":"양파", "Egg":"달걀", "Green Onion":"대파", "Hairtail":"갈치", "Kimchi":"김치", "Mackerel" :"고등어", "Meat":"소고기", "Milk":"우유", "Pork":"돼지고기", "Red Pepper Paste": "고추장", "Soybean":"된장", "Tofu":"두부", "Tteok":"떡", "Cabbage":"양배추", "Carrot":"당근", "Chili":"고추", "Crushed Garlic":"다진 마늘", "Fish Cake":"어묵", "Green Pumpkin":"애호박", "Ham":"햄", "Manila Calm":"바지락",  "Sausage":"소세지",  "Garlic":"마늘", "Chicken":"닭고기"]
+
     
     
     
@@ -33,13 +33,9 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.object.layer.masksToBounds = true
-        self.object.layer.cornerRadius = 5
-        self.confidence.layer.masksToBounds = true
-        self.confidence.layer.cornerRadius = 5
         self.output.text = ""
         // Do any additional setup after loading the view, typically from a nib.
-      
+        
         // 네비게이션 타이틀의 색을 바꿔줌
         let textAttributes = [NSAttributedString.Key.foregroundColor:UIColor.white]
         navigationController?.navigationBar.titleTextAttributes = textAttributes
@@ -47,7 +43,7 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
         // 네비게이션 바의 배경을 바꿔줌.
         self.navigationController?.navigationBar.barTintColor = UIColor(red:0.14, green:0.35, blue:0.91, alpha:1.0)
         
-        self.rectView.layer.borderColor = UIColor(red:0.67, green:0.71, blue:0.80, alpha:1.0).cgColor
+        self.rectView.layer.borderColor = UIColor(red:0.14, green:0.35, blue:0.91, alpha:1.0).cgColor
         self.rectView.layer.borderWidth = 2
         self.rectView.layer.masksToBounds = true
         self.rectView.layer.cornerRadius = 5
@@ -68,7 +64,7 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
         // 위에서 정한 디바이스가 보내주는 카메라의 인풋
         guard let input = try? AVCaptureDeviceInput(device: captureDevice) else { return }
         
-        // 인스턴스는 인풋을 더해준다.
+        // 인스턴스에 인풋을 추가해준다.
         captureSession.addInput(input)
         
         // AVCaptureSession을 시작한다.
@@ -86,7 +82,7 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
         rectView.frame.origin.y = 40
         rootLayer.addSublayer(previewLayer)
         
-
+        
         // A capture output that records video and provides access to video frames for processing.
         // 비디오가 제공하고 있는 데이터 아웃풋
         let dataOutput = AVCaptureVideoDataOutput()
@@ -96,12 +92,12 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
         
         captureSession.addOutput(dataOutput)
         
-
+        
     }
-
-
-    // Notifies the delegate that a new video frame was written.
-    // 델리게이트에게 새로운 비디오 프레임이 찍고 있는 것을 알려주고 그때 실시하는 메소드
+    
+    
+    
+    // 새로운 캡쳐 이미지 아웃풋이 버퍼에 저장되면 호출되는 델리게이트 메소드
     func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
         
         // Returns a sample buffer's CVImageBuffer of media data.
@@ -109,10 +105,8 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
         guard let pixelBuffer: CVPixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer) else {
             return
         }
-        
         // 사용할 MLModel을 결정해준다.
-        guard let model = try? VNCoreMLModel(for: Advanced().model) else { return }
-        
+        guard let model = try? VNCoreMLModel(for: NudgeMLModel3().model) else { return }
         
         //An image analysis request that uses a Core ML model to process images.
         // ML model을 사용한 이미지의 분석 요청
@@ -125,15 +119,10 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
             
             guard let firstObservation = results.first else { return }
             
-        
             
-            DispatchQueue.main.async { // Correct
-                
-//                if ( self.hasIngredient.count >= 1){
-//
-//                }
-                
-                if (firstObservation.confidence > 0.61)
+            // 물체 인식률이 65%가 넘으면 지정한 배열에 추가해주고 결과값을 표시해주는 비동기 스레드
+            DispatchQueue.main.async {
+                if (firstObservation.confidence > 0.65)
                 {
                     if( !self.hasIngredient.contains(String(firstObservation.identifier)))
                     {
@@ -141,23 +130,17 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
                         self.Str = self.Str + "\(self.ingredient[firstObservation.identifier]!) "
                     }
                 }
-                
                 self.object.text = "물체 : \(self.ingredient[firstObservation.identifier]!)"
                 self.confidence.text = "정확도 : \(round(firstObservation.confidence*100)/100)"
                 //round(avgTemp*100)/100
-                
-                
                 self.output.text = self.Str
-                
-                
             }
-            
-            
+
         }
         // 이미지 분석 요청을 Array로 받아 관리한다.
         try? VNImageRequestHandler(cvPixelBuffer: pixelBuffer, options: [ : ]).perform([request])
     }
-  
+    
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "IngredientSegue" {
@@ -166,6 +149,10 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
             IngredientInfo?.hasIngredient = self.hasIngredient
         }
     }
-
+    
 }
+
+
+
+
 
