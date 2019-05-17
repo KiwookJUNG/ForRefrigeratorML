@@ -11,6 +11,7 @@ import UIKit
 class IngredientCell: UITableViewCell {
     
     
+    
     @IBOutlet weak var ingrdient: UILabel!
     
     @IBOutlet weak var want: UISwitch!
