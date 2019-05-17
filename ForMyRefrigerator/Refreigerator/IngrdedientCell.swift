@@ -14,4 +14,11 @@ class IngredientCell: UITableViewCell {
     @IBOutlet weak var ingrdient: UILabel!
     
     @IBOutlet weak var want: UISwitch!
+    
+    var toggleHandler: ((UISwitch) -> Void)?
+    
+    @IBAction func toggleSwitch(_ sender: UISwitch) {
+        toggleHandler?(sender)
+    }
+    
 }
