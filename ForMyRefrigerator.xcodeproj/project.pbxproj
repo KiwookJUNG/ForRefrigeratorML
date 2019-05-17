@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A000F8EF22895A09007471B7 /* NudgeMLModel3.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = A000F8EE22895A09007471B7 /* NudgeMLModel3.mlmodel */; };
 		A005BB6A2276ED3600054CC0 /* Advanced.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = A005BB692276ED3600054CC0 /* Advanced.mlmodel */; };
 		A005BB74228193ED00054CC0 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A005BB73228193ED00054CC0 /* DetailViewController.swift */; };
 		A005BB782284583400054CC0 /* IngrdedientCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A005BB772284583400054CC0 /* IngrdedientCell.swift */; };
@@ -19,12 +20,12 @@
 		A07F843E225CB701004C14CD /* ForMyRefrigerator.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A07F843C225CB701004C14CD /* ForMyRefrigerator.xcdatamodeld */; };
 		A07F8440225CB704004C14CD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A07F843F225CB704004C14CD /* Assets.xcassets */; };
 		A07F8443225CB704004C14CD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A07F8441225CB704004C14CD /* LaunchScreen.storyboard */; };
-		A07F844B225CC8B7004C14CD /* SqueezeNet.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = A07F844A225CC8B7004C14CD /* SqueezeNet.mlmodel */; };
-		A07F844F225CD5D0004C14CD /* Resnet50.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = A07F844E225CD5D0004C14CD /* Resnet50.mlmodel */; };
-		A0FBEA2A2270A3FE0035D0C7 /* ForMyRef.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = A0FBEA292270A3FE0035D0C7 /* ForMyRef.mlmodel */; };
+		A0FB383F22884C5C00EF61A9 /* NudgeMLModel.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = A0FB383E22884C5B00EF61A9 /* NudgeMLModel.mlmodel */; };
+		A0FB3841228852D200EF61A9 /* NudgeMLModel2.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = A0FB3840228852D200EF61A9 /* NudgeMLModel2.mlmodel */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		A000F8EE22895A09007471B7 /* NudgeMLModel3.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = NudgeMLModel3.mlmodel; sourceTree = "<group>"; };
 		A005BB692276ED3600054CC0 /* Advanced.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = Advanced.mlmodel; sourceTree = "<group>"; };
 		A005BB73228193ED00054CC0 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		A005BB772284583400054CC0 /* IngrdedientCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngrdedientCell.swift; sourceTree = "<group>"; };
@@ -39,9 +40,8 @@
 		A07F843F225CB704004C14CD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A07F8442225CB704004C14CD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A07F8444225CB704004C14CD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		A07F844A225CC8B7004C14CD /* SqueezeNet.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = SqueezeNet.mlmodel; sourceTree = "<group>"; };
-		A07F844E225CD5D0004C14CD /* Resnet50.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; name = Resnet50.mlmodel; path = ../../../../Downloads/Resnet50.mlmodel; sourceTree = "<group>"; };
-		A0FBEA292270A3FE0035D0C7 /* ForMyRef.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = ForMyRef.mlmodel; sourceTree = "<group>"; };
+		A0FB383E22884C5B00EF61A9 /* NudgeMLModel.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = NudgeMLModel.mlmodel; sourceTree = "<group>"; };
+		A0FB3840228852D200EF61A9 /* NudgeMLModel2.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = NudgeMLModel2.mlmodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,6 +55,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A000F8F0228E7B28007471B7 /* Refreigerator */ = {
+			isa = PBXGroup;
+			children = (
+				A005BB7D2286AB0A00054CC0 /* ImageCollectionViewController.swift */,
+				A005BB73228193ED00054CC0 /* DetailViewController.swift */,
+				A005BB7B228529AD00054CC0 /* ProfileViewController.swift */,
+				A005BB7F2286AC3700054CC0 /* CollectionViewCell.swift */,
+				A07F8437225CB701004C14CD /* ViewController.swift */,
+				A005BB772284583400054CC0 /* IngrdedientCell.swift */,
+				A07F8435225CB701004C14CD /* AppDelegate.swift */,
+			);
+			path = Refreigerator;
+			sourceTree = "<group>";
+		};
 		A07F8429225CB701004C14CD = {
 			isa = PBXGroup;
 			children = (
@@ -74,18 +88,12 @@
 		A07F8434225CB701004C14CD /* ForMyRefrigerator */ = {
 			isa = PBXGroup;
 			children = (
-				A07F8435225CB701004C14CD /* AppDelegate.swift */,
-				A005BB772284583400054CC0 /* IngrdedientCell.swift */,
-				A07F8437225CB701004C14CD /* ViewController.swift */,
-				A07F844A225CC8B7004C14CD /* SqueezeNet.mlmodel */,
-				A0FBEA292270A3FE0035D0C7 /* ForMyRef.mlmodel */,
+				A000F8F0228E7B28007471B7 /* Refreigerator */,
+				A0FB383E22884C5B00EF61A9 /* NudgeMLModel.mlmodel */,
+				A0FB3840228852D200EF61A9 /* NudgeMLModel2.mlmodel */,
 				A005BB692276ED3600054CC0 /* Advanced.mlmodel */,
-				A07F844E225CD5D0004C14CD /* Resnet50.mlmodel */,
+				A000F8EE22895A09007471B7 /* NudgeMLModel3.mlmodel */,
 				A07F8439225CB701004C14CD /* Main.storyboard */,
-				A005BB7F2286AC3700054CC0 /* CollectionViewCell.swift */,
-				A005BB7D2286AB0A00054CC0 /* ImageCollectionViewController.swift */,
-				A005BB7B228529AD00054CC0 /* ProfileViewController.swift */,
-				A005BB73228193ED00054CC0 /* DetailViewController.swift */,
 				A07F843F225CB704004C14CD /* Assets.xcassets */,
 				A07F8441225CB704004C14CD /* LaunchScreen.storyboard */,
 				A07F8444225CB704004C14CD /* Info.plist */,
@@ -165,18 +173,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A0FBEA2A2270A3FE0035D0C7 /* ForMyRef.mlmodel in Sources */,
-				A07F844F225CD5D0004C14CD /* Resnet50.mlmodel in Sources */,
 				A005BB802286AC3700054CC0 /* CollectionViewCell.swift in Sources */,
 				A005BB7C228529AD00054CC0 /* ProfileViewController.swift in Sources */,
 				A07F8438225CB701004C14CD /* ViewController.swift in Sources */,
+				A0FB383F22884C5C00EF61A9 /* NudgeMLModel.mlmodel in Sources */,
 				A07F8436225CB701004C14CD /* AppDelegate.swift in Sources */,
+				A000F8EF22895A09007471B7 /* NudgeMLModel3.mlmodel in Sources */,
 				A005BB7E2286AB0A00054CC0 /* ImageCollectionViewController.swift in Sources */,
 				A07F843E225CB701004C14CD /* ForMyRefrigerator.xcdatamodeld in Sources */,
-				A07F844B225CC8B7004C14CD /* SqueezeNet.mlmodel in Sources */,
 				A005BB6A2276ED3600054CC0 /* Advanced.mlmodel in Sources */,
 				A005BB782284583400054CC0 /* IngrdedientCell.swift in Sources */,
 				A005BB74228193ED00054CC0 /* DetailViewController.swift in Sources */,
+				A0FB3841228852D200EF61A9 /* NudgeMLModel2.mlmodel in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
