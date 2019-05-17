@@ -10,6 +10,7 @@ import UIKit
 
 class ProfileViewController: UIViewController {
     
+    
     override func viewDidLoad() {
         
         // 네비게이션 타이틀의 색을 바꿔줌
