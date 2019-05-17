@@ -12,6 +12,8 @@ import Vision
 
 class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDelegate {
     
+    
+    
     // Methods for receiving sample buffers from and monitoring the status of a video data output.
     // AVCaputreVideoDataOutputSampleBufferDelegate는 샘플 버퍼를 위한 메소드와 비디오 데이터 아웃풋의 상태를 모니터링함.
     var rootLayer: CALayer! = nil
