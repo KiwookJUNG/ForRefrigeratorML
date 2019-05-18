@@ -97,17 +97,50 @@ class DetailViewController: UITableViewController  {
         
     }
 
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "RecipeSegue" {
-
-            let imageViewCollectionViewController = segue.destination as? ImageCollectionViewController
-            let ingredientsSelected = ingredients.compactMap { $0.isSelected == true ? $0.name : "" }
+    @IBAction func alertCount(_ sender: Any) {
+        guard let collection = self.storyboard?.instantiateViewController(withIdentifier: "FoodCollection") as? ImageCollectionViewController else {
+            return
+        }
+        
+        if ( self.switchCounter < 6 && self.switchCounter > 0){
             
-            imageViewCollectionViewController?.ingredients = ingredientsSelected
-
+            let ingredientsSelected = ingredients.compactMap { $0.isSelected == true ? $0.name : nil }
+            collection.ingredients = ingredientsSelected
             
+            self.navigationController?.pushViewController(collection, animated: true)
+            
+        } else if (self.switchCounter == 0){
+            let title = "식재료를 선택해 주세요."
+            let message = "식재료를 1개 이상 5개 이하로 선택해주세요."
+            let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+            let ok = UIAlertAction(title: "확인", style: .default)
+            
+            alert.addAction(ok)
+            
+            self.present(alert, animated: false)
+        } else {
+            let title = "식재료가 너무 많습니다."
+            let message = "식재료를 1개 이상 5개 이하로 선택해주세요."
+            let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+            let ok = UIAlertAction(title: "확인", style: .default)
+            
+            alert.addAction(ok)
+            
+            self.present(alert, animated: false)
         }
     }
+    
+//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//        if segue.identifier == "RecipeSegue" {
+//
+//            let imageViewCollectionViewController = segue.destination as? ImageCollectionViewController
+//            let ingredientsSelected = ingredients.compactMap { $0.isSelected == true ? $0.name : nil }
+//            
+//            imageViewCollectionViewController?.ingredients = ingredientsSelected
+//
+//            
+//        }
+//    }
 
     func requestHttpPost(_ sender: Any){
         let json = ["재료1":self.hasIngredient[0],
