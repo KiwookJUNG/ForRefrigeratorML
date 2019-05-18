@@ -27,8 +27,8 @@ class DetailViewController: UITableViewController  {
     var ingredients: [Ingredient] = [] // Class를 인자로 가지는 배열 변수
     
     // 한국어로 번역하기위한 Dictionary
-    var KoreanIngredient : [String : String] =  ["Onion":"양파", "Egg":"달걀", "Green Onion":"대파", "Hairtail":"갈치", "Kimchi":"김치", "Mackerel" :"고등어", "Meat":"소고기", "Milk":"우유", "Pork":"돼지고기", "Red Pepper Paste": "고추장", "Soybean":"된장", "Tofu":"두부", "Tteok":"떡", "Cabbage":"양배추", "Carrot":"당근", "Chili":"고추", "Crushed Garlic":"다진 마늘", "Fish Cake":"어묵", "Green Pumpkin":"애호박", "Ham":"햄", "Manila Calm":"바지락",  "Sausage":"소세지",  "Garlic":"마늘", "Chicken":"닭고기"]
-
+    //var KoreanIngredient : [String : String] =  ["Onion":"양파", "Egg":"달걀", "Green Onion":"대파", "Hairtail":"갈치", "Kimchi":"김치", "Mackerel" :"고등어", "Meat":"소고기", "Milk":"우유", "Pork":"돼지고기", "Red Pepper Paste": "고추장", "Soybean":"된장", "Tofu":"두부", "Tteok":"떡", "Cabbage":"양배추", "Carrot":"당근", "Chili":"고추", "Crushed Garlic":"다진 마늘", "Fish Cake":"어묵", "Green Pumpkin":"애호박", "Ham":"햄", "Manila Calm":"바지락",  "Sausage":"소세지",  "Garlic":"마늘", "Chicken":"닭고기"]
+    var IVO : IngredientVO!
     
     
     override func viewDidLoad() {
@@ -68,7 +68,7 @@ class DetailViewController: UITableViewController  {
         
     
         // 재료의 이름을 라벨에, 스위치를 이용해 모든 값을 선택하지 않은 것으로 설정한다.
-        cell.ingrdient.text = self.KoreanIngredient[row]
+        cell.ingrdient.text = self.IVO.ingredient[row]
         cell.want.isOn = false
         
         // cell이 토글될때 마다 실행되는 메소드
