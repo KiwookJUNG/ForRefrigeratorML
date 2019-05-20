@@ -26,7 +26,7 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
     
     var IVO : IngredientVO!
     
-    //var ingredient : [String : String] = ["Onion":"양파", "Egg":"달걀", "Green Onion":"대파", "Hairtail":"갈치", "Kimchi":"김치", "Mackerel" :"고등어", "Meat":"소고기", "Milk":"우유", "Pork":"돼지고기", "Red Pepper Paste": "고추장", "Soybean":"된장", "Tofu":"두부", "Tteok":"떡", "Cabbage":"양배추", "Carrot":"당근", "Chili":"고추", "Crushed Garlic":"다진 마늘", "Fish Cake":"어묵", "Green Pumpkin":"애호박", "Ham":"햄", "Manila Calm":"바지락",  "Sausage":"소세지",  "Garlic":"마늘", "Chicken":"닭고기"]
+    var ingredient : [String : String] = ["Onion":"양파", "Egg":"달걀", "Green Onion":"대파", "Hairtail":"갈치", "Kimchi":"김치", "Mackerel" :"고등어", "Meat":"소고기", "Milk":"우유", "Pork":"돼지고기", "Red Pepper Paste": "고추장", "Soybean":"된장", "Tofu":"두부", "Tteok":"떡", "Cabbage":"양배추", "Carrot":"당근", "Chili":"고추", "Crushed Garlic":"다진 마늘", "Fish Cake":"어묵", "Green Pumpkin":"애호박", "Ham":"햄", "Manila Calm":"바지락",  "Sausage":"소세지",  "Garlic":"마늘", "Chicken":"닭고기", "None":"없음"]
     
     
     
@@ -50,6 +50,8 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
         self.rectView.layer.masksToBounds = true
         self.rectView.layer.cornerRadius = 5
         
+        
+        
        
 
         
@@ -59,7 +61,7 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
         // An object that manages capture activity and coordinates the flow of data from input devices to capture outputs.
         let captureSession = AVCaptureSession()
         // 사진 수준의 퀄리티를 전송한다.
-        captureSession.sessionPreset = .photo
+        captureSession.sessionPreset = .vga640x480
         
         // 인풋을 주는 디바이스를 디폴트로하고 ( 폰의 카메라, 동영상으로 설정 )
         guard let captureDevice =
@@ -110,7 +112,7 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
             return
         }
         // 사용할 MLModel을 결정해준다.
-        guard let model = try? VNCoreMLModel(for: NudgeMLModel3().model) else { return }
+        guard let model = try? VNCoreMLModel(for: NudgeMLModel07().model) else { return }
         
         //An image analysis request that uses a Core ML model to process images.
         // ML model을 사용한 이미지의 분석 요청
@@ -126,18 +128,24 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
             
             // 물체 인식률이 80%가 넘으면 지정한 배열에 추가해주고 결과값을 표시해주는 비동기 스레드
             DispatchQueue.main.async {
-                if (firstObservation.confidence > 0.80)
+                if (firstObservation.confidence > 0.95)
                 {
-                    if( !self.hasIngredient.contains(String(firstObservation.identifier)))
+                    if( !self.hasIngredient.contains(String(firstObservation.identifier)) && (firstObservation.identifier != "None")
+                        )
                     {
                         self.hasIngredient.append(firstObservation.identifier)
-                        self.Str = self.Str + "\(self.IVO.ingredient[firstObservation.identifier]!) "
+                        //self.Str = self.Str + "\(firstObservation.identifier) "
+                        self.Str = self.Str + "\(self.ingredient[firstObservation.identifier]!) "
                     }
+                
+                    self.output.text = self.Str
                 }
-                self.object.text = "물체 : \(self.IVO.ingredient[firstObservation.identifier]!)"
+                
+                //self.object.text = "물체 : \(firstObservation.identifier)"
+                self.object.text = "물체 : \(self.ingredient[firstObservation.identifier]!)"
                 self.confidence.text = "정확도 : \(round(firstObservation.confidence*100)/100)"
                 //round(avgTemp*100)/100
-                self.output.text = self.Str
+                
             }
 
         }
