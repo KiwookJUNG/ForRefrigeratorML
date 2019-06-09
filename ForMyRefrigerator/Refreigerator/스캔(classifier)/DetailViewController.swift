@@ -27,7 +27,7 @@ class DetailViewController: UITableViewController  {
     var ingredients: [Ingredient] = [] // Class를 인자로 가지는 배열 변수
     
     // 한국어로 번역하기위한 Dictionary
-    //var KoreanIngredient : [String : String] =  ["Onion":"양파", "Egg":"달걀", "Green Onion":"대파", "Hairtail":"갈치", "Kimchi":"김치", "Mackerel" :"고등어", "Meat":"소고기", "Milk":"우유", "Pork":"돼지고기", "Red Pepper Paste": "고추장", "Soybean":"된장", "Tofu":"두부", "Tteok":"떡", "Cabbage":"양배추", "Carrot":"당근", "Chili":"고추", "Crushed Garlic":"다진 마늘", "Fish Cake":"어묵", "Green Pumpkin":"애호박", "Ham":"햄", "Manila Calm":"바지락",  "Sausage":"소세지",  "Garlic":"마늘", "Chicken":"닭고기"]
+    var KoreanIngredient : [String : String] =  ["Bean Sprouts": "콩나물", "Broccoli":"브로콜리", "Cabbage":"양배추", "Carrot":"당근", "Chicken":"닭", "Chili":"고추", "Corn":"옥수수", "Crab":"꽃게", "Cucumber":"오이", "Daikon":"무", "Egg":"달걀", "Eggplant":"가지", "Garlic":"마늘", "Ginger":"생강", "Ginseng":"인삼", "Green Onion":"대파", "Jujube":"대추", "Kimchi":"김치", "Lettuce":"상추", "Mackerel":"고등어", "Manila Calm":"바지락", "Meat":"소고기", "Mozzarella":"모짜렐라", "Mushroom":"양송이", "Napa":"배추", "None":"없음", "Paprika":"피망", "Perilla Leaf":"깻잎", "Pork":"돼지고기", "Potato":"감자", "Red Chili":"홍고추", "Red Paprica":"파프리카", "Red Pepper Paste":"고추장", "Sausage":"소시지", "Shiitake Mushroom":"표고버섯", "Shrimp":"새우", "Soybean":"된장", "Spam":"햄", "Tofu":"두부", "Tomato":"토마토", "Tuna":"참치", "Whelk":"골뱅이"]
     var IVO : IngredientVO!
     
     
@@ -38,7 +38,7 @@ class DetailViewController: UITableViewController  {
         navigationController?.navigationBar.titleTextAttributes = textAttributes
     
         // 네비게이션 바의 배경을 바꿔줌.
-        self.navigationController?.navigationBar.barTintColor = UIColor(red:0.14, green:0.35, blue:0.91, alpha:1.0)
+        self.navigationController?.navigationBar.barTintColor = UIColor(red:0.00, green:0.64, blue:1.00, alpha:1.0)
     
 
         // hasIngredient는 ViewController에서 인식한 객채의 라벨을 전달받은 스트링 배열 변수이다.
@@ -68,13 +68,15 @@ class DetailViewController: UITableViewController  {
         
     
         // 재료의 이름을 라벨에, 스위치를 이용해 모든 값을 선택하지 않은 것으로 설정한다.
-        cell.ingrdient.text = self.IVO.ingredient[row]
+        cell.ingrdient.text = self.KoreanIngredient[row]
         cell.want.isOn = false
         
         // cell이 토글될때 마다 실행되는 메소드
         // Ingredient에 토글된 값이 표시된다 ( True OR False )
         
         cell.toggleHandler = { toggleSwitch in
+            // toggleSwitch는 스토리보드에서 연결해준 액션변수이다.
+            // 그러므로 스위치가 토글되면 함수가 실행되며 ON, OFF 값을 Ingredient 클래스의 isSelected에 저장해준다.
             self.ingredients[indexPath.row].isSelected = toggleSwitch.isOn
         }
         
@@ -98,18 +100,27 @@ class DetailViewController: UITableViewController  {
     }
 
     @IBAction func alertCount(_ sender: Any) {
+        
+        // FoodCollection( ViewController)로 정보를 전달하기 위해 뷰컨트롤러의 인스턴스를 읽어온다.
         guard let collection = self.storyboard?.instantiateViewController(withIdentifier: "FoodCollection") as? ImageCollectionViewController else {
             return
         }
         
+        // 사용자가 1~5개의 재료를 선택하면
         if ( self.switchCounter < 6 && self.switchCounter > 0){
             
-            let ingredientsSelected = ingredients.compactMap { $0.isSelected == true ? $0.name : nil }
+            
+            // ingredients 배열에 있는 값들을 순회하면서 isSeleted값이 true이면,
+            // 즉, 사용자가 선택한 재료라면 다음 뷰컨트롤러로 넘겨준다.
+            // 
+            let ingredientsSelected = ingredients.compactMap { $0.isSelected == true ? KoreanIngredient[$0.name] : nil }
             collection.ingredients = ingredientsSelected
+            
             
             self.navigationController?.pushViewController(collection, animated: true)
             
         } else if (self.switchCounter == 0){
+            // 사용자가 재료를 선택하지 않으면 경고창을 띠워줌
             let title = "식재료를 선택해 주세요."
             let message = "식재료를 1개 이상 5개 이하로 선택해주세요."
             let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
@@ -119,6 +130,7 @@ class DetailViewController: UITableViewController  {
             
             self.present(alert, animated: false)
         } else {
+            // 사용자가 재료를 너무 많이 선택하면 경고창을 띠워준다.
             let title = "식재료가 너무 많습니다."
             let message = "식재료를 1개 이상 5개 이하로 선택해주세요."
             let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
@@ -130,52 +142,8 @@ class DetailViewController: UITableViewController  {
         }
     }
     
-//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//        if segue.identifier == "RecipeSegue" {
-//
-//            let imageViewCollectionViewController = segue.destination as? ImageCollectionViewController
-//            let ingredientsSelected = ingredients.compactMap { $0.isSelected == true ? $0.name : nil }
-//            
-//            imageViewCollectionViewController?.ingredients = ingredientsSelected
-//
-//            
-//        }
-//    }
 
-    func requestHttpPost(_ sender: Any){
-        let json = ["재료1":self.hasIngredient[0],
-                    "재료2":self.hasIngredient[1],
-                    "재료3":self.hasIngredient[2],
-                    "재료4":self.hasIngredient[3],
-                    "재료5":self.hasIngredient[4]]
-        // url 주소 할당
-        guard let url = URL(string: "ec2-54-180-113-7.ap-northeast-2.compute.amazonaws.com") else { return }
-        
-        // http 설정 배열을 JSON 파일로 만들어준다.
-        var request = URLRequest(url: url)
-        request.httpMethod = "POST"
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        guard let httpBody = try? JSONSerialization.data(withJSONObject: json, options: []) else { return }
-        
-        request.httpBody = httpBody
-        
-        let session = URLSession.shared
-        session.dataTask(with: request) { (data, response, error) in
-            if let response = response {
-                print(response)
-            }
-            if let data = data {
-                do {
-                    let json = try JSONSerialization.jsonObject(with: data, options: [])
-                    print(json)
-                } catch{
-                    print(error)
-                }
-            }
-        }.resume()
-        
-        
-    }
+    
     
     
 }
