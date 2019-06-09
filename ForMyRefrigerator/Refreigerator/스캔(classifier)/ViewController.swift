@@ -173,6 +173,8 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
     }
     
     
+    // 화면이 바뀌기전 수행되는 메소드
+    // 다음 뷰컨트롤러로 인식된 hasIngredient ( 식재료 배열 ) 을 전달한다.
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "IngredientSegue" {
             
