@@ -32,8 +32,8 @@ class IngredientVO {
                                               "Green Pumpkin":"애호박",
                                               "Ham":"햄",
                                               "Manila Calm":"바지락",
-                                              "Sausage":"소세지",
+                                              "Sausage":"소시지",
                                               "Garlic":"마늘",
-                                              "Chicken":"닭고기"]
+                                              "Chicken":"닭"]
     
 }
