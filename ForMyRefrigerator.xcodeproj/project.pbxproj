@@ -8,8 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		A000F8F222906C51007471B7 /* IngredientVO.swift in Sources */ = {isa = PBXBuildFile; fileRef = A000F8F122906C51007471B7 /* IngredientVO.swift */; };
-		A000F8F4229074B1007471B7 /* NudgeMLModel4.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = A000F8F3229074B1007471B7 /* NudgeMLModel4.mlmodel */; };
-		A000F8FE22919922007471B7 /* NudgeMLModel07.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = A000F8FD22919922007471B7 /* NudgeMLModel07.mlmodel */; };
 		A005BB74228193ED00054CC0 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A005BB73228193ED00054CC0 /* DetailViewController.swift */; };
 		A005BB782284583400054CC0 /* IngrdedientCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A005BB772284583400054CC0 /* IngrdedientCell.swift */; };
 		A005BB7C228529AD00054CC0 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A005BB7B228529AD00054CC0 /* ProfileViewController.swift */; };
@@ -34,8 +32,6 @@
 
 /* Begin PBXFileReference section */
 		A000F8F122906C51007471B7 /* IngredientVO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientVO.swift; sourceTree = "<group>"; };
-		A000F8F3229074B1007471B7 /* NudgeMLModel4.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = NudgeMLModel4.mlmodel; sourceTree = "<group>"; };
-		A000F8FD22919922007471B7 /* NudgeMLModel07.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = NudgeMLModel07.mlmodel; sourceTree = "<group>"; };
 		A005BB73228193ED00054CC0 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		A005BB772284583400054CC0 /* IngrdedientCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngrdedientCell.swift; sourceTree = "<group>"; };
 		A005BB7B228529AD00054CC0 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
@@ -79,10 +75,8 @@
 				A0ADEA0522A3A7D0002C4892 /* 오늘의 레시피 */,
 				A0FEF6D022A125480095C625 /* no_image.png */,
 				A005BB7B228529AD00054CC0 /* ProfileViewController.swift */,
-				A000F8FD22919922007471B7 /* NudgeMLModel07.mlmodel */,
 				A000F8F122906C51007471B7 /* IngredientVO.swift */,
 				A07F8435225CB701004C14CD /* AppDelegate.swift */,
-				A000F8F3229074B1007471B7 /* NudgeMLModel4.mlmodel */,
 			);
 			path = Refreigerator;
 			sourceTree = "<group>";
@@ -225,7 +219,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A000F8FE22919922007471B7 /* NudgeMLModel07.mlmodel in Sources */,
 				A0FEF6D722A395F30095C625 /* ObjectDetectionVC.swift in Sources */,
 				A0B9BA5622A3E1C800E9C1FA /* RecipeVC.swift in Sources */,
 				A0B9BA5822A4E10A00E9C1FA /* RecipeCell.swift in Sources */,
@@ -239,7 +232,6 @@
 				A07A2DEC22A5E9D20099F175 /* NudgeMLModel10.mlmodel in Sources */,
 				A07F8436225CB701004C14CD /* AppDelegate.swift in Sources */,
 				A005BB7E2286AB0A00054CC0 /* ImageCollectionViewController.swift in Sources */,
-				A000F8F4229074B1007471B7 /* NudgeMLModel4.mlmodel in Sources */,
 				A07F843E225CB701004C14CD /* ForMyRefrigerator.xcdatamodeld in Sources */,
 				A0E5C91922A3AD00001A3711 /* TodayFoodCell.swift in Sources */,
 				A005BB782284583400054CC0 /* IngrdedientCell.swift in Sources */,
