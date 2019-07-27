@@ -232,7 +232,7 @@ public protocol UICollectionViewDataSource : NSObjectProtocol {
 
 뷰 컨트롤러의 초기화에 관한 구문을 여기에 작성하면 됩니다.
 
-￼
+￼<img width="550" alt="뷰컨생명주기" src="https://user-images.githubusercontent.com/47555993/61991477-98158280-b08b-11e9-96ad-e5aaae51d8eb.png">
 
 출처 : https://developer.apple.com/documentation/uikit/uiviewcontroller?source=post_page
 
@@ -278,7 +278,8 @@ private let session = AVCaptureSession()
 <br>
 <br>
 
-￼[이미지]
+
+<img width="583" alt="AVCaptureSession" src="https://user-images.githubusercontent.com/47555993/61991478-98158280-b08b-11e9-83b4-4dade062514a.png">
 
 출처 : https://developer.apple.com/documentation/avfoundation/cameras_and_media_capture/setting_up_a_capture_session
 
@@ -418,6 +419,9 @@ Vision 프레임워크의 메소드들을 사용해 아웃풋에 적절한 처�
 <br>
 <br>
 
+<img width="477" alt="Core ML" src="https://user-images.githubusercontent.com/47555993/61991480-98158280-b08b-11e9-9f2f-00298c684b56.png">
+
+
  ￼
 출처 : https://developer.apple.com/documentation/coreml?source=post_page
 
@@ -534,7 +538,7 @@ let objectRecognition = VNCoreMLRequest(model: visionModel, completionHandler: {
 <br>
 <br>
 ￼
-
+<img width="1128" alt="Vision" src="https://user-images.githubusercontent.com/47555993/61991482-98ae1900-b08b-11e9-9084-782df2fc1fa3.png">
 ￼
 
 이미지 출처 : https://developer.apple.com/videos/play/wwdc2017/506/
@@ -571,6 +575,8 @@ let objectRecognition = VNCoreMLRequest(model: visionModel, completionHandler: {
 
 <br>
 <br>
+
+<img width="785" alt="Delegate" src="https://user-images.githubusercontent.com/47555993/61991481-98ae1900-b08b-11e9-89be-3ce3f533ddb2.png">
 
 이미지 출처 : https://www.oodlestechnologies.com/blogs/Brief-About-Delegation-Design-pattern-in-Swift/
 
@@ -685,11 +691,165 @@ Vision 프레임워크를 사용해 머신러닝 모델로 객체를 분류하�
 
 > **오픈소스 사용:** 오픈 소스를 이용한 AVCaputure와 CoreML - Vision 프레임 워크 사용 
 
+<br>
+<br>
+
 ### 4 - 1. 캡쳐를 위한 카메라 구성 - AVFoundation Framework
   - 실시간 객체 인식의 카메라 구성과 동일하여 생략 하였습니다.
+
+<br>
+<br>
+
 ### 4 - 2. CoreML과 Vision 프레임 워크를 사용한 실시간 객체 분류
   - 이 또한 실시간 객체 인식의 구성과 비슷하지만 차이점을 서술하겠습니다.
+
+<br>
+<br>
+
+```swift
+        // 사용할 MLModel을 결정해준다.
+        guard let model = try? VNCoreMLModel(for: NudgeMLModel10().model) else { return }
+```
+
+1. (공통점) 머신러닝 모델 설정 : `VNCoreMLModel(for:)` 메소드를 사용하여 사용할 `ML 모델`을 설정해줍니다.
+
+<br>
+<br>
+
+```swift
+        let request = VNCoreMLRequest(model: model) { (finishedReq, err) in
+                        
+        		. . .
+
+        }
+```
+2. (공통점) 이미지 분석 요청 등록 : `VNCoreMLRequest(model:completionHandler:)`를 이용해 설정된 `ML 모델`을 사용하여 이미지에 대한 분석을 요청합니다.
+
+
+<br>
+<br>
+
+```swift
+        // 이미지 분석 요청 실행 시켜준다.
+        try? VNImageRequestHandler(cvPixelBuffer: pixelBuffer, options: [ : ]).perform([request])
+```
+3. (공통점) 이미지 분석 요청 실행 : `VNImageRequestHandler.perform()`을 사용해 두 번째 과정에서 등록한 요청(Request 배열)을 실행시켜 줍니다.
+
+<br>
+<br>
+
+```swift
+// 분석이 완료된 request를 VNClassficationObservation의 배열로 타입캐스팅을 해준다.
+            guard let results = finishedReq.results as? [VNClassificationObservation] else { return }
+            
+            // 배열에서 가장 첫번째 값을 firstObservation이라고 한다.
+            guard let firstObservation = results.first else { return }
+```
+
+4. (차이점) 이미지 분석 결과값 사용 : `VNCoreMLModelRequest`가 `VNImageReqeustHandler.perform()`에 의해 실행된 결과는 `VNRecognizedOjbectObservation` 타입이 아니라 `VNClassificationObservation` 타입입니다.
+
+왜냐하면 1번 ML 모델 설정 과정에서 ML 모델을 설정하는 과정은 공통적인 과정이었지만 실제로 선택한 ML 모델은 다른 모델이기 때문입니다.
+
+<br>
+<br>
+
+
+	- Turi Create 를 사용해서 만든 ML Model (Object Detection 용)
+
+위의 그림은 프로젝트에 포함된 모델로 Object Detection을 위한 ML 모델입니다.
+
+이 모델을 사용하여 이미지를 분석하면 두개의 MultiArray 아웃풋이 나옵니다.
+
+따라서 이 모델을 사용하여 이미지를 분석한 결과값은 VNRecognizedOjbectObservation 타입이 됩니다.
+
+<br>
+<br>
+
+	- Create ML을 사용해서 만든 ML Model (Object Classification 용)
+
+하지만 위의 두 번째 이미지는 Object Classification을 위한 ML 모델입니다.
+
+이 모델을 사용하여 이미지를 분석하면 Dictionary와 String 타입의 아웃풋을 리턴합니다.
+
+따라서 이 모델을 사용하여 이미지를 분석한 결과값은 VNRecognizedOjbectObservation 타입이 될 수 없고 VNClassificationObservation 타입이 됩니다.
+
+이 처럼, MLMode을 사용한 요청(Request) -> 요청 핸들러를 사용한 요청 실행(RequestHandler) -> 결과값 반환(Observations)
+
+실행의 흐름은 Object Detection과 똑같지만, 어떤 모델을 사용하였느냐에 따라 결과값 (Observation)이 달라지는 모습을 보여줍니다.
+
+<br>
+<br>
+
 ### 4 - 3. CALayer - ( View와 Layer의 관계 )
+
+[이미지 1 - 이미지 2]
+
+위와 같이 카메라에 인식을 하면 물체의 라벨과 정확도가 나오는 화면입니다.
+
+하지만 카메라가 비추는 화면만 보여주는 뷰는 사용자가 느끼기에 무엇을 인식 시켜야 하는지 어디에다가 인식시켜야 하는지 선뜻 이해하기 어려울 수 있기 때문에두 번째 이미지와 같이 파란색의 사각형의 `Layer`를 추가해줬습니다. 
+
+그리고 ‘물체를 올려주세요.’와 같은 사용자의 행동을 유도하는 라벨을 배치하였습니다.
+
+
+<br>
+<br>
+
+#### 사각형의 Layer를 추가해주고자 할 때 발생한 문제
+
+처음 사각형의 `Layer`를 추가해주기 위해 `UIView`를 만들고 `UIView`의 `layer`의 `border`의 색을 바꾼 후 `Root View`에 `addSubView`로 추가해주었습니다.
+
+그러자 `Root View`에 서브뷰로 추가된 뷰 전체가 카메라 `Root View`의 `CALayer`를 가려서 백색의 화면만이 보이는 문제가 발생하였습니다.
+
+문제를 분석해 본 결과 `Root View`에서 실제로 동영상 캡쳐를 디스플레이하는 것은 `UIView`가 직접 다루지 않고 `UIKit`에서 이러한 작업을 `Core Animation`에 위임하는 것으로 파악이 됐습니다.
+
+그리하여, 실질적으로 뷰의 컨텐츠 여기서는 동영상 캡쳐를 디스플레이하는 행위는 `CALayer`가 담당하고 있었습니다.
+
+<br>
+<br>
+
+
+```swift
+let previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
+```
+
+위의 구문의 `AVCaptureVideoPreviewLayer(session:)` 메소드는 비디오를 담당하는 캡쳐 세션을 이용하여 캡쳐된 비디오를 디스플레이 해주는 `Core Animation layer` 객체 입니다.
+
+프로젝트에서 `Root View의 Root Layer`에 위의 객체(`previewLayer 객체`)를 서브레이어로 등록해 주었습니다.
+
+그리고 난 다음 `Root View`에 새로운 `View( 파란색 사각형의 Layer를 가지는 View)`를 서브 뷰로 등록해주었더니 `Root View`의 `CALayer`를 서브뷰가 가리는 현상이 일어났습니다. 
+
+
+#### 문제를 해결한 방법 : Root Layer에 Sub Layer로 추가하기.
+
+```swift
+
+let previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
+
+previewLayer.addSublayer(rectView.layer)
+
+```
+문제를 해결한 방법은 `Root Layer`를 가리지 않기 위해 `Root Layer`의 `Sub Layer`로 원하는 `Layer`를 추가해 줬습니다.
+
+<br>
+<br>
+
+#### 공부한 점 : View와 CALayer의 관계
+
+
+<img width="386" alt="CALayer" src="https://user-images.githubusercontent.com/47555993/61991479-98158280-b08b-11e9-9ba0-b7e4556326ab.png">
+
+출처 : https://www.raywenderlich.com/402-calayer-tutorial-for-ios-getting-started
+
+
+`UIView`는 레이아웃을 설정하거나 사용자의 터치이벤트에는 반응하지만, 컨텐츠나 애니메이션을 그려주는 행위는 `Core Animation`에 위임하고 있습니다.
+
+이러한 `Core Animation` 행위를 담당하는 것은 `UIView`가 감싸고 있는 `CALayer`가 담당 합니다. 즉, 동영상을 디스플레이 하는것을 담당하는 객체는 `CALayer` 객체이므로 새로운 `Layer`를 추가해주고 싶으면 `sublayer`방식으로 추가해 주어야 합니다.
+
+
+
+<br>
+<br>
+
 ### 4 - 4. 인식한 식재료를 배열에 추가하기 - 프로젝트를 위해 필요한 부분 추가
 
 > **오픈 소스로 부터 공부한 점 : AVFoundation, Vision Framework, 델리게이트 패턴, CALayer** 
