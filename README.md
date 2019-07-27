@@ -233,7 +233,7 @@ public protocol UICollectionViewDataSource : NSObjectProtocol {
 
 ￼<img width="550" alt="뷰컨생명주기" src="https://user-images.githubusercontent.com/47555993/61991477-98158280-b08b-11e9-96ad-e5aaae51d8eb.png">
 
-출처 : https://developer.apple.com/documentation/uikit/uiviewcontroller?source=post_page
+[이미지 출처](https://developer.apple.com/documentation/uikit/uiviewcontroller?source=post_page)
 
 <br>
 
@@ -288,8 +288,8 @@ private let session = AVCaptureSession()
 
 <img width="583" alt="AVCaptureSession" src="https://user-images.githubusercontent.com/47555993/61991478-98158280-b08b-11e9-83b4-4dade062514a.png">
 
-출처 : https://developer.apple.com/documentation/avfoundation/cameras_and_media_capture/setting_up_a_capture_session
 
+[이미지 출처](https://developer.apple.com/documentation/avfoundation/cameras_and_media_capture/setting_up_a_capture_session)
 
 - 위의 이미지는 `AVCaputureSession`에 관한 애플 개발자 문서에 수록된 이미지 입니다.
 
@@ -428,8 +428,8 @@ Vision 프레임워크의 메소드들을 사용해 아웃풋에 적절한 처�
 <img width="477" alt="Core ML" src="https://user-images.githubusercontent.com/47555993/61991480-98158280-b08b-11e9-9f2f-00298c684b56.png">
 
 
- ￼
-출처 : https://developer.apple.com/documentation/coreml?source=post_page
+￼[이미지 출처](https://developer.apple.com/documentation/coreml?source=post_page)
+
 
 
 - `CoreML`은 위의 이미지와 같은 구조를 가집니다.
@@ -546,8 +546,8 @@ let objectRecognition = VNCoreMLRequest(model: visionModel, completionHandler: {
 ￼
 <img width="1128" alt="Vision" src="https://user-images.githubusercontent.com/47555993/61991482-98ae1900-b08b-11e9-9084-782df2fc1fa3.png">
 ￼
+￼[이미지 출처](https://developer.apple.com/videos/play/wwdc2017/506/)
 
-이미지 출처 : https://developer.apple.com/videos/play/wwdc2017/506/
 
 - 위의 이미지는 이미지를 분석하는 `Vision 프레임워크`의 `워크 플로우` 입니다.
 
@@ -580,8 +580,8 @@ let objectRecognition = VNCoreMLRequest(model: visionModel, completionHandler: {
 ### 3 - 3. 델리게이트 패턴
 <img width="785" alt="Delegate" src="https://user-images.githubusercontent.com/47555993/61991481-98ae1900-b08b-11e9-89be-3ce3f533ddb2.png">
 
-이미지 출처 : https://www.oodlestechnologies.com/blogs/Brief-About-Delegation-Design-pattern-in-Swift/
 
+￼[이미지 출처](https://www.oodlestechnologies.com/blogs/Brief-About-Delegation-Design-pattern-in-Swift/)
 
 - 델리게이션은 위의 그림과 같이 `Object 1`이 처리할 수 있는 일을 `Object 2`에 위임하고 특정 이벤트가 발생하면 `Obejct 2`가 일을 처리해주는 것을 말합니다.
 
@@ -852,8 +852,8 @@ previewLayer.addSublayer(rectView.layer)
 
 <img width="386" alt="CALayer" src="https://user-images.githubusercontent.com/47555993/61991479-98158280-b08b-11e9-9ba0-b7e4556326ab.png">
 
-출처 : https://www.raywenderlich.com/402-calayer-tutorial-for-ios-getting-started
 
+￼[이미지 출처](https://www.raywenderlich.com/402-calayer-tutorial-for-ios-getting-started)
 
 `UIView`는 레이아웃을 설정하거나 사용자의 터치이벤트에는 반응하지만, 컨텐츠나 애니메이션을 그려주는 행위는 `Core Animation`에 위임하고 있습니다.
 
