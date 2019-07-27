@@ -54,6 +54,7 @@
 사용자에게 오늘 추천해주고 싶은 레시피를 추천해주는 시스템을 구현하고자 하였습니다.
 
 결과 화면은 다음과 같습니다.
+
 <br>
 <br>
 <br>
@@ -72,18 +73,19 @@
         let apidata = try! Data(contentsOf: apiURI)                               
 ```
 
-`JSON` 데이터를 받아오기 위하여 서버로부터 제공받은 `url` 주소를 사용해 
+- `JSON` 데이터를 받아오기 위하여 서버로부터 제공받은 `url` 주소를 사용해 차례로 `URL 객체`, `Data 객체`로 변환시켜줬습니다.
 
-차례로 `URL 객체`, `Data 객체`로 변환시켜줬습니다.
 <br>
 <br>
 
 
 [ 전달 받은 JSON의 형태 - 이미지 6 ]
 
-위와 같은 형태의 `JSON`을 전달 받았습니다.
+- 위와 같은 형태의 `JSON`을 전달 받았습니다.
+
 <br>
 <br>
+
 ```swift
 
         do {
@@ -101,9 +103,7 @@
         } catch { }
 ```
 
-`JSON 배열` 속에 `JSON 객체`가 있는 형태이므로 `NSArray` 타입으로 캐스팅을 먼저 해주고 난뒤, 
-
-키 값과 밸류 값이 있는  `JSON 객체`는 `NSDictionary`로 캐스팅 해주었습니다.
+- `JSON 배열` 속에 `JSON 객체`가 있는 형태이므로 `NSArray` 타입으로 캐스팅을 먼저 해주고 난뒤,  키 값과 밸류 값이 있는  `JSON 객체`는 `NSDictionary`로 캐스팅 해주었습니다.
 
 <br>
 <br>
@@ -127,19 +127,15 @@
 
 데이터를 받아 온 이후 자연스럽게 `protocol UICollectionViewDataSource` 에 구현되어 있는 델리게이트 메소드가 호출될 것이라고 예상했습니다.
 
-하지만, `viewDidLoad`에 있는 코드 (위에서는 서버로 부터 받아온 `JSON`을 Native Data로 바꾸어 배열에 추가해주는 과정)가 끝나지 않아도
+하지만, `viewDidLoad`에 있는 코드 (위에서는 서버로 부터 받아온 `JSON`을 Native Data로 바꾸어 배열에 추가해주는 과정)가 끝나지 않아도 `protocol UICollectionViewDataSource`의 델리게이트 메소드가 호출되는 문제를 발견하였습니다.
 
-`protocol UICollectionViewDataSource`의 델리게이트 메소드가 호출되는 문제를 발견하였습니다.
+그리하여, `print()`구문을 통해 델리게이트 메소드가 호출 될 때의 결과 값을 출력해본 결과 `collectionView(_:numberOfItemsInSection:)` 메소드에서의 리턴값 0을 출력하였습니다.
 
-그리하여, `print()`구문을 통해 델리게이트 메소드가 호출 될 때의 결과 값을 출력해본 결과
+즉, `viewDidLoad`에 코드가 모두 끝나기전, 델리게이트 메소드가 호출되는 시점의 차이로 인해서 문제가 발생하였고, `Collection View`에 아무것도 출력되지 않는 현상을 겪었습니다.
 
-`collectionView(_:numberOfItemsInSection:)` 메소드에서의 리턴값 0을 출력하였습니다.
-
-즉, `viewDidLoad`에 코드가 모두 끝나기전, 델리게이트 메소드가 호출되는 시점의 차이로 인해서 문제가 발생하였고,
-
-`Collection View`에 아무것도 출력되지 않는 현상을 겪었습니다.
 <br>
 <br>
+
 ```swift
 @IBOutlet weak var collectionView: UICollectionView!
 
@@ -156,8 +152,7 @@
            }
 ```
 
-해경 방법 : 스토리 보드에서 `Collection View` 를 `@IBOutlet` 변수로 연결해 준 뒤
-메인 스레드에서 비동기 방식으로 `reloadData()`를 실시해줬습니다.
+- 해결 방법 : 스토리 보드에서 `Collection View` 를 `@IBOutlet` 변수로 연결해 준 뒤 메인 스레드에서 비동기 방식으로 `reloadData()`를 실시해줬습니다.
 
 > **이유** : 서버와 통신하는 하여 `JSON`을 `Native` 데이터로 바꿔주는 것이 네트워크 환경에 따라 다른 속도를 가질 수 있고 그에 따라 
 >
@@ -165,6 +160,8 @@
 >`reloadData()` 메소드를 사용하면 `Datasource Delegate`의 메소드가 재호출되기 때문입니다.
 >
 >그러므로, for 구문 안에서 계속해서 이미지와 음식 `String` 값이 추가되는 동시에 `collectionView.reloadData()`를 실시해줬습니다.
+
+
 <br>
 <br>
 <br>
@@ -174,10 +171,10 @@
 
 서버에서 전달 받은 데이터의 갯수(`Collection View Cell`이 몇개나 생성되어야 하는지 알기위해)를 파악하고 각 셀에 전달받은 데이터를 이용하여 `Collection View`에 출력시켜 주기 위해`UICollcetionViewDataSource` 프로토콜을 채택하였습니다. 
 
-`UICollectionViewDataSource`  프로토콜은 개발자 문서에 정의된 사항에 따르면 이 프로토콜을 채택한 객체는 반드시 `collectionView(_:numberOfItemsInSection:)` 메소드와 `collectionView(_:cellForItemAt:)` 메소드를 구현해줘야 합니다. 이 메소드들은, 차례로 컬렉션 뷰 셀의 갯수를 리턴하고 각 셀에 출력해주는 역할을 합니다.
+`UICollectionViewDataSource`  프로토콜은 개발자 문서에 정의된 사항에 따르면 이 프로토콜을 채택한 객체는 반드시 `collectionView(_:numberOfItemsInSection:)` 메소드와 `collectionView(_:cellForItemAt:)` 메소드를 구현해줘야 합니다. 
+이 메소드들은, 차례로 컬렉션 뷰 셀의 갯수를 리턴하고 각 셀에 출력해주는 역할을 합니다.
 
 일반적으로 프로토콜을 구현할 때는 기본적으로 프로토콜의 명세에 포함된 모든 프로퍼티와 메소드, 그리고 초기화 구문을 구현해야 합니다.
-
 그렇지 않으면 필요한 항목의 구현이 누락되었다는 오류가 발생하는데 여기서는 위의 두개의 메소드가 필수로 구현해야하는 메소드입니다.
 
 <br>
@@ -209,7 +206,9 @@ public protocol UICollectionViewDataSource : NSObjectProtocol {
 }
 ```
 
-- 위는 `UICollectionViewDataSource` 프로토콜의 정의 구문 중 일부 입니다. 가장 위의 두 메소드인 `collectionView(_:numberOfItemsInSection:)` 메소드와 
+- 위는 `UICollectionViewDataSource` 프로토콜의 정의 구문 중 일부 입니다. 
+
+가장 위의 두 메소드인 `collectionView(_:numberOfItemsInSection:)` 메소드와 
 `collectionView(_:cellForItemAt:)` 메소드는 정의 구문인 func 앞에 아무런 구문도 붙어있지 않습니다.
 
 이 프로토콜을 채택한 객체는 반드시 두 메소드를 구현해줘야 프로토콜 명세에 맞춘 올바른 구현이라고 할 수 있습니다.
@@ -232,9 +231,13 @@ public protocol UICollectionViewDataSource : NSObjectProtocol {
 
 뷰 컨트롤러의 초기화에 관한 구문을 여기에 작성하면 됩니다.
 
+<br>
+
 ￼<img width="550" alt="뷰컨생명주기" src="https://user-images.githubusercontent.com/47555993/61991477-98158280-b08b-11e9-96ad-e5aaae51d8eb.png">
 
 출처 : https://developer.apple.com/documentation/uikit/uiviewcontroller?source=post_page
+
+<br>
 
 뷰가 메모리에 로드되고 난 이후 뷰의 생명 주기는 위의 그림과 같습니다.
 
@@ -263,6 +266,8 @@ Vision 프레임워크를 사용해 머신러닝 모델로 객체를 인식하�
 
 > **오픈소스 사용:** 오픈 소스를 이용한 AVCaputure와 CoreML - Vision 프레임 워크 사용
 
+<br>
+<br>
 
 ![디텍션지프](https://user-images.githubusercontent.com/47555993/61993927-4cc09b80-b0ae-11e9-8446-73655c01ef2a.gif)
 
@@ -277,7 +282,7 @@ Vision 프레임워크를 사용해 머신러닝 모델로 객체를 인식하�
 private let session = AVCaptureSession()
 ```
 
-`AVCaptureSession()`은 디바이스로 부터 들어오는 인풋부터 캡쳐 아웃풋까지 데이터의 흐름을 조직화하고 캡쳐활동을 관리하는 객체입니다.
+- `AVCaptureSession()`은 디바이스로 부터 들어오는 인풋부터 캡쳐 아웃풋까지 데이터의 흐름을 조직화하고 캡쳐활동을 관리하는 객체입니다.
 
 <br>
 <br>
@@ -287,7 +292,8 @@ private let session = AVCaptureSession()
 
 출처 : https://developer.apple.com/documentation/avfoundation/cameras_and_media_capture/setting_up_a_capture_session
 
-위의 이미지는 `AVCaputureSession`에 관한 애플 개발자 문서에 수록된 이미지 입니다.
+
+- 위의 이미지는 `AVCaputureSession`에 관한 애플 개발자 문서에 수록된 이미지 입니다.
 
 `AVCaputreSession`은 위의 그림과 같이 `디바이스(카메라 또는 마이크로폰)`으로 부터 `디바이스 인풋(Device Input)`을 받아와서 `아웃풋(Output)`으로 변환시키는 역할을 합니다.
 
@@ -370,9 +376,7 @@ Vision 프레임워크의 메소드들을 사용해 아웃풋에 적절한 처�
         }
 ```
 
-위의 코드는 세션에 비디오데이터 아웃풋을 `addOutput()` 메소드를 사용해 연결 해주고 
-
-그 비디오데이터 아웃풋 객체에 `setSampleBufferDelegate(_:queue:)` 메소드를 사용해 큐 버퍼와 델리게이트 객체를 등록해주는 과정입니다.
+위의 코드는 세션에 비디오데이터 아웃풋을 `addOutput()` 메소드를 사용해 연결 해주고 그 비디오데이터 아웃풋 객체에 `setSampleBufferDelegate(_:queue:)` 메소드를 사용해 큐 버퍼와 델리게이트 객체를 등록해주는 과정입니다.
 
 즉, 비디오 아웃풋에 동영상이 저장될 큐를 등록하여 세션에 등록해 준것 입니다.
 
@@ -430,7 +434,7 @@ Vision 프레임워크의 메소드들을 사용해 아웃풋에 적절한 처�
 출처 : https://developer.apple.com/documentation/coreml?source=post_page
 
 
-`CoreML`은 위의 이미지와 같은 구조를 가집니다.
+- `CoreML`은 위의 이미지와 같은 구조를 가집니다.
 
 이미지 분석을 위해서 `CoreML`을 사용하기 위해서 지원되는 `프레임워크`는 `Vision 프레임워크` 입니다.
 
@@ -531,7 +535,7 @@ let objectRecognition = VNCoreMLRequest(model: visionModel, completionHandler: {
 	for observation in results where observation is VNRecognizedObjectObservation
 ```
 
-위의 코드는 `self.drawVisionRequestResults()`의 일부를 발췌한 것입니다.
+- 위의 코드는 `self.drawVisionRequestResults()`의 일부를 발췌한 것입니다.
 
 이 메소드는 실행된 이미지 분석 요청의 결과 값 즉, `VNRecognizedObjectObservation`으로 바운딩 박스를 그려주는 메소드 입니다.
 
@@ -547,7 +551,7 @@ let objectRecognition = VNCoreMLRequest(model: visionModel, completionHandler: {
 
 이미지 출처 : https://developer.apple.com/videos/play/wwdc2017/506/
 
-위의 이미지는 이미지를 분석하는 `Vision 프레임워크`의 `워크 플로우` 입니다.
+- 위의 이미지는 이미지를 분석하는 `Vision 프레임워크`의 `워크 플로우` 입니다.
 
 위에서 서술한 2번 부터 4번의 순서와 같이 ( 1번은 ML Model을 선택하는 과정이라 이미지에서는 제외돼있습니다.)
 
@@ -585,7 +589,7 @@ let objectRecognition = VNCoreMLRequest(model: visionModel, completionHandler: {
 이미지 출처 : https://www.oodlestechnologies.com/blogs/Brief-About-Delegation-Design-pattern-in-Swift/
 
 
-델리게이션은 위의 그림과 같이 `Object 1`이 처리할 수 있는 일을 `Object 2`에 위임하고 특정 이벤트가 발생하면 `Obejct 2`가 일을 처리해주는 것을 말합니다.
+- 델리게이션은 위의 그림과 같이 `Object 1`이 처리할 수 있는 일을 `Object 2`에 위임하고 특정 이벤트가 발생하면 `Obejct 2`가 일을 처리해주는 것을 말합니다.
 
 `Object 1`을 `일을 위임하는 객체`라고 하고 `Object 2`를 `델리게이트 객체`라고 합니다.
 
@@ -670,9 +674,7 @@ class ObjectDetectionVC: CameraVC {
 } 
 ```
 
-이벤트가 발생하면 `CameraVC 객체`(여기서는 `CameraVC`를 상속받은 `ObjectDetectionVC`가 처리합니다.) 는 이 사실을 알게되고 
-
-`videoDataOutput`에게 위임 받은 일을 처리 합니다. ( `captureOutput(_:didOutput:from:)` 메소드를 실행 함으로써 위임 받은 일을 처리 합니다,)
+이벤트가 발생하면 `CameraVC 객체`(여기서는 `CameraVC`를 상속받은 `ObjectDetectionVC`가 처리합니다.) 는 이 사실을 알게되고 `videoDataOutput`에게 위임 받은 일을 처리 합니다. ( `captureOutput(_:didOutput:from:)` 메소드를 실행 함으로써 위임 받은 일을 처리 합니다,)
 
 즉, `videoDataOutput`이 동영상 데이터를 저장하는 일과 동영상의 이미지를 분석하는 일 두가지를 나누어서 동영상의 이미지를 분석하는 일을 다른 객체에 위임을 한 것입니다.
 
@@ -764,11 +766,11 @@ Vision 프레임워크를 사용해 머신러닝 모델로 객체를 분류하�
 
 	- Turi Create 를 사용해서 만든 ML Model (Object Detection 용)
 
-위의 그림은 프로젝트에 포함된 모델로 Object Detection을 위한 ML 모델입니다.
+위의 그림은 프로젝트에 포함된 모델로 `Object Detection`을 위한 ML 모델입니다.
 
-이 모델을 사용하여 이미지를 분석하면 두개의 MultiArray 아웃풋이 나옵니다.
+이 모델을 사용하여 이미지를 분석하면 두개의 `MultiArray` 아웃풋이 나옵니다.
 
-따라서 이 모델을 사용하여 이미지를 분석한 결과값은 VNRecognizedOjbectObservation 타입이 됩니다.
+따라서 이 모델을 사용하여 이미지를 분석한 결과값은 `VNRecognizedOjbectObservation` 타입이 됩니다.
 
 <br>
 <br>
@@ -777,15 +779,15 @@ Vision 프레임워크를 사용해 머신러닝 모델로 객체를 분류하�
 
 	- Create ML을 사용해서 만든 ML Model (Object Classification 용)
 
-하지만 위의 두 번째 이미지는 Object Classification을 위한 ML 모델입니다.
+하지만 위의 두 번째 이미지는 `Object Classification`을 위한 ML 모델입니다.
 
-이 모델을 사용하여 이미지를 분석하면 Dictionary와 String 타입의 아웃풋을 리턴합니다.
+이 모델을 사용하여 이미지를 분석하면 `Dictionary`와 `String` 타입의 아웃풋을 리턴합니다.
 
-따라서 이 모델을 사용하여 이미지를 분석한 결과값은 VNRecognizedOjbectObservation 타입이 될 수 없고 VNClassificationObservation 타입이 됩니다.
+따라서 이 모델을 사용하여 이미지를 분석한 결과값은 `VNRecognizedOjbectObservation` 타입이 될 수 없고 `VNClassificationObservation` 타입이 됩니다.
 
-이 처럼, MLMode을 사용한 요청(Request) -> 요청 핸들러를 사용한 요청 실행(RequestHandler) -> 결과값 반환(Observations)
+이 처럼, **MLMode을 사용한 요청(Request) -> 요청 핸들러를 사용한 요청 실행(RequestHandler) -> 결과값 반환(Observations)**
 
-실행의 흐름은 Object Detection과 똑같지만, 어떤 모델을 사용하였느냐에 따라 결과값 (Observation)이 달라지는 모습을 보여줍니다.
+실행의 흐름은 `Object Detection`과 똑같지만, 어떤 모델을 사용하였느냐에 따라 결과값 (`Observation`)이 달라지는 모습을 보여줍니다.
 
 <br>
 <br>
@@ -798,7 +800,7 @@ Vision 프레임워크를 사용해 머신러닝 모델로 객체를 분류하�
 
 하지만 카메라가 비추는 화면만 보여주는 뷰는 사용자가 느끼기에 무엇을 인식 시켜야 하는지 어디에다가 인식시켜야 하는지 선뜻 이해하기 어려울 수 있기 때문에두 번째 이미지와 같이 파란색의 사각형의 `Layer`를 추가해줬습니다. 
 
-그리고 ‘물체를 올려주세요.’와 같은 사용자의 행동을 유도하는 라벨을 배치하였습니다.
+그리고 `‘물체를 올려주세요.’`와 같은 사용자의 행동을 유도하는 라벨을 배치하였습니다.
 
 
 <br>
@@ -812,7 +814,7 @@ Vision 프레임워크를 사용해 머신러닝 모델로 객체를 분류하�
 
 문제를 분석해 본 결과 `Root View`에서 실제로 동영상 캡쳐를 디스플레이하는 것은 `UIView`가 직접 다루지 않고 `UIKit`에서 이러한 작업을 `Core Animation`에 위임하는 것으로 파악이 됐습니다.
 
-그리하여, 실질적으로 뷰의 컨텐츠 여기서는 동영상 캡쳐를 디스플레이하는 행위는 `CALayer`가 담당하고 있었습니다.
+실질적으로 뷰의 컨텐츠 여기서는 동영상 캡쳐를 디스플레이하는 이벤트는 `CALayer`가 담당하고 있었습니다.
 
 <br>
 <br>
@@ -828,6 +830,8 @@ let previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
 
 그리고 난 다음 `Root View`에 새로운 `View( 파란색 사각형의 Layer를 가지는 View)`를 서브 뷰로 등록해주었더니 `Root View`의 `CALayer`를 서브뷰가 가리는 현상이 일어났습니다. 
 
+<br>
+<br>
 
 #### 문제를 해결한 방법 : Root Layer에 Sub Layer로 추가하기.
 
@@ -862,6 +866,54 @@ previewLayer.addSublayer(rectView.layer)
 
 ### 4 - 4. 인식한 식재료를 배열에 추가하기 - 프로젝트를 위해 필요한 부분 추가
 
+```swift
+	let request = VNCoreMLRequest(model: model) { (finishedReq, err) in
+           
+            guard let results = finishedReq.results as? [VNClassificationObservation] else { return }
+            
+            // 배열에서 가장 첫번째 값을 firstObservation이라고 한다.
+            guard let firstObservation = results.first else { return }
+            
+            
+            // 물체 인식률이 95%가 넘으면 지정한 배열에 추가해주고 결과값을 표시해주는 비동기 메인스레드
+            DispatchQueue.main.async {
+              	// 인식률이 95%가 넘고
+                if (firstObservation.confidence > 0.95)
+                {
+                    // 현재 hasIngredient에 포함되어있지 않고 None이 아니면
+                    if( !self.hasIngredient.contains(String(firstObservation.identifier)) && (firstObservation.identifier != "None")
+                        )
+                    {
+                        // 사용자가 인식 할 수 있도록 Str Label에 추가해준다.
+                        self.hasIngredient.append(firstObservation.identifier)
+                      
+                        self.outputStr = self.outputStr + "\(self.ingredient[firstObservation.identifier]!) "
+                    }
+                
+                    self.output.text = self.outputStr
+                }
+                
+                //self.object.text = "물체 : \(firstObservation.identifier)"
+                self.object.text = "물체 : \(self.ingredient[firstObservation.identifier]!)"
+                self.confidence.text = "정확도 : \(round(firstObservation.confidence*100)/100)"
+                
+            }
+
+        }
+```
+
+위의 코드는 `VNCoreMLRequest` 부분 (이미지 분석 요청) 하는 부분에서 실제로 `Reuqest`가 실행되었을 때 실행되는 클로져입니다.
+
+`VNCoreMLRequestHandler`에 의해 요청이 실행되면 클로져 또한 함께 실행되는데, 해당하는 클로저는 `VNClassificationObservation` 배열의 첫번째 결과 값이 일정 인식률(95%)를 넘으면 식재료가 인식되었다고 파악하고
+`hasIngredient`라는 배열에 추가를 해주는 코드입니다.
+
+그러므로, 사용자가 카메라를 통해 인식시킨 식재료가 95%의 정확도를 상회하면 인식된 식재료로 파악하고 인식된 식재료로 배열에 추가를 해줬습니다.
+
+
+<br>
+<br>
+
+
 > **오픈 소스로 부터 공부한 점 : AVFoundation, Vision Framework, 델리게이트 패턴, CALayer** 
 > 
 >오픈 소스를 사용하면서 오픈 소스의 코드의 흐름과 논리의 흐름을 알지 못하고 사용하고 싶지 않았습니다.
@@ -886,7 +938,7 @@ previewLayer.addSublayer(rectView.layer)
 
 실시간 객체 인식 또는 객체 분류로 냉장고의 식재료를 인식한 다음 사용자에게 인식한 재료를 보여주는 뷰 입니다.
 
-사용자는 원하는 식재료를 선택하고, 선택한 식재료를 다음 뷰 컨트롤러(사용자가 선택한 식재료를 서버로 보내고 그에 따른 레시피를 추천 받는 뷰 컨트롤러 입니다.) 로 넘겨주게 됩니다.
+사용자는 **원하는 식재료**를 선택하고, 선택한 식재료를 다음 뷰 컨트롤러(사용자가 선택한 식재료를 서버로 보내고 그에 따른 레시피를 추천 받는 뷰 컨트롤러 입니다.) 로 넘겨주게 됩니다.
 
 <br>
 <br>
@@ -909,7 +961,7 @@ class Ingredient { // Ingredient Class  재료의 이름과 선택됐는지 안�
 }
 ```
 
-Ingredient 클래스를 선언해 주었습니다.
+`Ingredient` 클래스를 선언해 주었습니다.
 
 왜냐하면 `Object Detection` 또는 `Object Classification`으로 인식된 재료가 이전 뷰 컨트롤러로 부터 `[String]` 배열로 전달 받았기 때문입니다.
 
@@ -940,8 +992,10 @@ class DetailViewController: UITableViewController  {
 ```
 
 위의 코드를 사용하여, 전달 받은 식재료를 `offset`을 추가한 `Ingredient` 타입의 배열에 추가해 주었습니다.
+
 <br>
 <br>
+
 ### 5 - 2. 사용자 선택 한 식재료 전달
 
 ```swift
@@ -963,6 +1017,7 @@ class IngredientCell: UITableViewCell {
 각각의 테이블 뷰 셀에 위치한 `switch`가 `on/off` 될때마다 `Ingredient offset`을 업데이트 해주기위해 커스템 셀을 만들었습니다.
 
 스토리보드에서 연결해준 `@IBAction` 메소드인 `toggleSwitch`는 `on/off` 될때마다 `UISwitch`를 파라미터로 가지는 메소드타입의 `toggleHandler` 프로퍼티가 실행됩니다.
+
 <br>
 <br>
 
@@ -1013,14 +1068,12 @@ class IngredientCell: UITableViewCell {
             
             
             self.navigationController?.pushViewController(collection, animated: true)
-            
+             
         }
 } 
 ```
 
-`alertCount` 액션 메소드는 사용자가 선택한 식재료가 1~5개 사이일 때 `Ingredient`의 인스턴스를 배열로 가지는 `ingredients` 배열을 
-
-`compactMap`으로 선택된 값만 선택하여 배열로 만들어주는 함수를 사용해 새로운 `String 배열`을 만들어 다음 뷰 컨트롤러로 전달하였습니다.
+`alertCount` 액션 메소드는 사용자가 선택한 식재료가 1~5개 사이일 때 `Ingredient`의 인스턴스를 배열로 가지는 `ingredients` 배열을 `compactMap`으로 선택된 값만 선택하여 배열로 만들어주는 함수를 사용해 새로운 `String 배열`을 만들어 다음 뷰 컨트롤러로 전달하였습니다.
 
 `compactMap(_:)` 메소드는 호출하는 배열에서 `nil`이 아닌 값들 만을 모아 새롭운 배열을 리턴해주는 메소드입니다.
 
@@ -1081,8 +1134,10 @@ class ImageCollectionViewController: UIViewController, UICollectionViewDataSourc
 서버에 `HTTP POST` 방식으로 전달하기 위해서는 `JSON` 형태로 바꿔줘야 합니다.
 
 그러므로 `ingredients` 배열을 `JSON`으로 바꾸기 위해 `키`와 `value` 형태인 딕셔너리로 먼저 바꾸어줬습니다.
+
 <br>
 <br>
+
 ```swift
 // HTTP Body는 postJson ( 위에서 만들어 줬던 JSON ) 으로 할당해준다.
         guard let httpBody = try? JSONSerialization.data(withJSONObject: postJson, options: []) else { return }
