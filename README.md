@@ -11,7 +11,7 @@
 
 <br>
 <br>
-<br>
+
 
 
 
@@ -23,7 +23,7 @@
 냉장고 속 **식재료**를 **Vision 프레임워크**를 사용하여 인식하고 인식한 식재료를 바탕으로 서버로부터 **레시피**를 받아와 사용자에게 제공해주는 애플리케이션
 <br>
 <br>
-<br>
+
 
 ### 서비스 화면
 
@@ -578,10 +578,6 @@ let objectRecognition = VNCoreMLRequest(model: visionModel, completionHandler: {
 <br>
 
 ### 3 - 3. 델리게이트 패턴
-
-<br>
-<br>
-
 <img width="785" alt="Delegate" src="https://user-images.githubusercontent.com/47555993/61991481-98ae1900-b08b-11e9-89be-3ce3f533ddb2.png">
 
 이미지 출처 : https://www.oodlestechnologies.com/blogs/Brief-About-Delegation-Design-pattern-in-Swift/
@@ -939,6 +935,11 @@ previewLayer.addSublayer(rectView.layer)
 
 
 # 5. 사용자 식재료 선택
+
+<div>
+<img width="300" src="https://user-images.githubusercontent.com/47555993/61995611-ba2bf680-b0c5-11e9-9182-f2c0b4a5f789.PNG">
+<img width="300" src="https://user-images.githubusercontent.com/47555993/61995612-ba2bf680-b0c5-11e9-96dc-d69a137a5092.PNG">
+</div>
 
 실시간 객체 인식 또는 객체 분류로 냉장고의 식재료를 인식한 다음 사용자에게 인식한 재료를 보여주는 뷰 입니다.
 
