@@ -261,7 +261,11 @@ public protocol UICollectionViewDataSource : NSObjectProtocol {
 
 Vision 프레임워크를 사용해 머신러닝 모델로 객체를 인식하고 객체의 위치를 파악하여 사용자에게 어떤 식재료가 있는지 보여주는 화면입니다.
 
-> **오픈소스 사용:** 오픈 소스를 이용한 AVCaputure와 CoreML - Vision 프레임 워크 사용 
+> **오픈소스 사용:** 오픈 소스를 이용한 AVCaputure와 CoreML - Vision 프레임 워크 사용
+
+
+![디텍션지프](https://user-images.githubusercontent.com/47555993/61993927-4cc09b80-b0ae-11e9-8446-73655c01ef2a.gif)
+
 
 <br>
 <br>
