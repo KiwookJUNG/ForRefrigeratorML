@@ -20,20 +20,19 @@
 ### 서비스 설명
 
 
-냉장고 속 **식재료**를 **Vision 프레임워크**를 사용하여 인식하고 인식한 식재료를 바탕으로 서버로부터 **레시피**를 사용자에게 제공해주는 애플리케이션
+냉장고 속 **식재료**를 **Vision 프레임워크**를 사용하여 인식하고 인식한 식재료를 바탕으로 서버로부터 **레시피**를 받아와 사용자에게 제공해주는 애플리케이션
 <br>
 <br>
 <br>
 
 ### 서비스 화면
 
-이미지 1 - 오늘의 레시피
-
-이미지 2 - Object Detection
-
-이미지 3 - Object Classification
-
-이미지 4 - 레시피 추천
+<div>
+<img width="200" src="https://user-images.githubusercontent.com/47555993/61995613-ba2bf680-b0c5-11e9-86a5-31281bf664df.PNG"></img>
+<img width="200" src="https://user-images.githubusercontent.com/47555993/61995608-b9936000-b0c5-11e9-916f-0ddcc7be7e61.PNG"></img>
+<img width="200" src="https://user-images.githubusercontent.com/47555993/61995615-bac48d00-b0c5-11e9-9b70-552725e4c8ea.PNG"></img>
+<img width="200" src="https://user-images.githubusercontent.com/47555993/61995614-ba2bf680-b0c5-11e9-9ef7-72095a335663.PNG"></img>
+</div>
 
 --------------------------
 <br>
@@ -43,7 +42,7 @@
 
 # 2. 오늘의 레시피
 
-
+<img width="300" src="https://user-images.githubusercontent.com/47555993/61995613-ba2bf680-b0c5-11e9-86a5-31281bf664df.PNG"></img>
 
 ### 2 - 1. 화면 설명 
 
@@ -77,9 +76,8 @@
 
 <br>
 <br>
+<img src="https://user-images.githubusercontent.com/47555993/61995617-bac48d00-b0c5-11e9-8d5f-60983f562da0.png"></img>
 
-
-[ 전달 받은 JSON의 형태 - 이미지 6 ]
 
 - 위와 같은 형태의 `JSON`을 전달 받았습니다.
 
@@ -693,6 +691,9 @@ class ObjectDetectionVC: CameraVC {
 
 # 4. 실시간 객체 분류 (Real Time Object Classification)
 
+![클래지프](https://user-images.githubusercontent.com/47555993/61995616-bac48d00-b0c5-11e9-8508-11726400cab5.gif)
+
+
 Vision 프레임워크를 사용해 머신러닝 모델로 객체를 분류하고 사용자가 어떤 식재료가 있는지 화면을 통해 인식할 수 있도록 보여주는 화면입니다.
 
 > **오픈소스 사용:** 오픈 소스를 이용한 AVCaputure와 CoreML - Vision 프레임 워크 사용 
@@ -794,7 +795,10 @@ Vision 프레임워크를 사용해 머신러닝 모델로 객체를 분류하�
 
 ### 4 - 3. CALayer - ( View와 Layer의 관계 )
 
-[이미지 1 - 이미지 2]
+<div>
+<img width="300"  src="https://user-images.githubusercontent.com/47555993/61995618-bb5d2380-b0c5-11e9-9885-87a0b0c83a8e.PNG">
+<img width="300"  src="https://user-images.githubusercontent.com/47555993/61995619-bb5d2380-b0c5-11e9-9ebb-bc18cf69aa35.PNG">
+</div>
 
 위와 같이 카메라에 인식을 하면 물체의 라벨과 정확도가 나오는 화면입니다.
 
@@ -1095,9 +1099,11 @@ class IngredientCell: UITableViewCell {
 
 결과 화면은 다음과 같습니다.
 
-[ 추천 레시피 이미지 ]
+<img width="300" src="https://user-images.githubusercontent.com/47555993/61995614-ba2bf680-b0c5-11e9-9ef7-72095a335663.PNG">
+
 <br>
 <br>
+
 ### 6 - 1. 서버에 식재료 전송 (HTTP POST)
 
 사용자가 앞선 화면에서 식재료를 선택하였다면 식재료를 `HTTP POST` 방식으로 서버에 전송하고 그에 따른 결과물을 받아 출력해주려고 하였습니다.
