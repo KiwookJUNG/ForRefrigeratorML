@@ -754,6 +754,10 @@ Vision 프레임워크를 사용해 머신러닝 모델로 객체를 분류하�
 <br>
 
 
+
+<img width="907" alt="ObjectDetection" src="https://user-images.githubusercontent.com/47555993/61991681-c8aaeb80-b08e-11e9-8ae4-5d8a58d0bee4.png">
+
+
 	- Turi Create 를 사용해서 만든 ML Model (Object Detection 용)
 
 위의 그림은 프로젝트에 포함된 모델로 Object Detection을 위한 ML 모델입니다.
@@ -764,6 +768,8 @@ Vision 프레임워크를 사용해 머신러닝 모델로 객체를 분류하�
 
 <br>
 <br>
+
+<img width="907" alt="ObjectClassification" src="https://user-images.githubusercontent.com/47555993/61991673-97cab680-b08e-11e9-8ca2-1384370a8c66.png">
 
 	- Create ML을 사용해서 만든 ML Model (Object Classification 용)
 
