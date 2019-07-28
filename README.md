@@ -41,7 +41,7 @@
 
 # 2. 오늘의 레시피
 
-<img width="300" src="https://user-images.githubusercontent.com/47555993/61995613-ba2bf680-b0c5-11e9-86a5-31281bf664df.PNG"></img>
+
 
 ### 2 - 1. 화면 설명 
 
@@ -52,6 +52,8 @@
 사용자에게 오늘 추천해주고 싶은 레시피를 추천해주는 시스템을 구현하고자 하였습니다.
 
 결과 화면은 다음과 같습니다.
+
+<img width="300" src="https://user-images.githubusercontent.com/47555993/61995613-ba2bf680-b0c5-11e9-86a5-31281bf664df.PNG"></img>
 
 <br>
 <br>
@@ -107,9 +109,9 @@
 
 > **as! 를 이용하여 다운 캐스팅해준 이유** (JSONSerialization.jsonObject(with:option:) 구문은 Any 타입을 반환하므로 다운캐스팅이 필요합니다.)
 >
-> 서버에서 전달해주는 JSON의 형태가 변하지 않고 고정적이라고 생각해서 였습니다.
+> 서버로 부터 전달받은 JSON의 형태가 변하지 않고 고정적이라고 생각해서 였습니다.
 >
-> 하지만, 예외적인 경우가 발생할 수 있고, 안정적인 코딩을 위해서는 as? 구문을 사용하여 옵셔널로 다운캐스팅 해주는 것이 더 바람직하다고 생각합니다.
+> 하지만, 예외적인 경우가 발생할 수 있고, 런타임 오류를 피하기위해서 as? 구문을 사용하여 옵셔널로 다운캐스팅 해주는 것이 더 바람직하다고 생각합니다.
 >
 > 반환된 옵셔널은 옵셔널 바인딩(guard let 또는 if let 을 사용하여 안전하게 옵셔널을 해제하는 방법)을 사용하여 옵셔널을 해제하여 사용할 수 있습니다.
 >
@@ -604,7 +606,8 @@ let objectRecognition = VNCoreMLRequest(model: visionModel, completionHandler: {
 프로젝트에서는 동영상이 샘플 버퍼에 저장되는 이벤트가 일어날때 마다 이미지 처리 부분(`Vision 프레임워크를 사용한 이미지 분석`)을 다른 객체에 위임하여 동영상을 저장해주는 부분과 이미지를 처리해주는 부분을 나누어줬습니다.
 
 
-![델리게이트5](https://user-images.githubusercontent.com/47555993/62002783-a7a5d180-b146-11e9-95c5-b232f9dd6395.PNG)
+![델리게이트](https://user-images.githubusercontent.com/47555993/62002818-1aaf4800-b147-11e9-98c5-f02419e48225.PNG)
+
 
 
 
