@@ -5,13 +5,12 @@
 1. [제공서비스](https://github.com/KiwookJUNG/ForRefrigeratorML/blob/iOSkiwook/README.md#1-%EC%A0%9C%EA%B3%B5-%EC%84%9C%EB%B9%84%EC%8A%A4)
 2. [오늘의 레시피](https://github.com/KiwookJUNG/ForRefrigeratorML/blob/iOSkiwook/README.md#2-%EC%98%A4%EB%8A%98%EC%9D%98-%EB%A0%88%EC%8B%9C%ED%94%BC)
 3. [실시간 객체 인식 (Real Time Object Detection)](https://github.com/KiwookJUNG/ForRefrigeratorML/blob/iOSkiwook/README.md#3-%EC%8B%A4%EC%8B%9C%EA%B0%84-%EA%B0%9D%EC%B2%B4-%EC%9D%B8%EC%8B%9D-real-time-object-detection)
-4. [실시간 객체 분류 (Real Time Object Classification](https://github.com/KiwookJUNG/ForRefrigeratorML/blob/iOSkiwook/README.md#4-%EC%8B%A4%EC%8B%9C%EA%B0%84-%EA%B0%9D%EC%B2%B4-%EB%B6%84%EB%A5%98-real-time-object-classification)
+4. [실시간 객체 분류 (Real Time Object Classification)](https://github.com/KiwookJUNG/ForRefrigeratorML/blob/iOSkiwook/README.md#4-%EC%8B%A4%EC%8B%9C%EA%B0%84-%EA%B0%9D%EC%B2%B4-%EB%B6%84%EB%A5%98-real-time-object-classification)
 5. [사용자 식재료 선택](https://github.com/KiwookJUNG/ForRefrigeratorML/blob/iOSkiwook/README.md#5-%EC%82%AC%EC%9A%A9%EC%9E%90-%EC%8B%9D%EC%9E%AC%EB%A3%8C-%EC%84%A0%ED%83%9D)
 6. [레시피 추천](https://github.com/KiwookJUNG/ForRefrigeratorML/blob/iOSkiwook/README.md#6-%EC%B6%94%EC%B2%9C-%EB%A0%88%EC%8B%9C%ED%94%BC)
 
 <br>
 <br>
-
 
 
 
@@ -263,6 +262,7 @@ public protocol UICollectionViewDataSource : NSObjectProtocol {
 Vision 프레임워크를 사용해 머신러닝 모델로 객체를 인식하고 객체의 위치를 파악하여 사용자에게 어떤 식재료가 있는지 보여주는 화면입니다.
 
 > **오픈소스 사용:** 오픈 소스를 이용한 AVCaputure와 CoreML - Vision 프레임 워크 사용
+> [오픈소스 링크](https://developer.apple.com/documentation/vision/recognizing_objects_in_live_capture)
 
 <br>
 <br>
@@ -546,7 +546,12 @@ let objectRecognition = VNCoreMLRequest(model: visionModel, completionHandler: {
 ￼
 <img width="1128" alt="Vision" src="https://user-images.githubusercontent.com/47555993/61991482-98ae1900-b08b-11e9-9084-782df2fc1fa3.png">
 ￼
+
+
+
 ￼[이미지 출처](https://developer.apple.com/videos/play/wwdc2017/506/)
+
+
 
 
 - 위의 이미지는 이미지를 분석하는 `Vision 프레임워크`의 `워크 플로우` 입니다.
@@ -599,7 +604,8 @@ let objectRecognition = VNCoreMLRequest(model: visionModel, completionHandler: {
 프로젝트에서는 동영상이 샘플 버퍼에 저장되는 이벤트가 일어날때 마다 이미지 처리 부분(`Vision 프레임워크를 사용한 이미지 분석`)을 다른 객체에 위임하여 동영상을 저장해주는 부분과 이미지를 처리해주는 부분을 나누어줬습니다.
 
 
-[ 파워 포인트로 그린 이미지 ] 
+![델리게이트5](https://user-images.githubusercontent.com/47555993/62002783-a7a5d180-b146-11e9-95c5-b232f9dd6395.PNG)
+
 
 
 위의 흐름을 코드로 설명하면 다음과 같습니다.
@@ -692,7 +698,8 @@ class ObjectDetectionVC: CameraVC {
 
 Vision 프레임워크를 사용해 머신러닝 모델로 객체를 분류하고 사용자가 어떤 식재료가 있는지 화면을 통해 인식할 수 있도록 보여주는 화면입니다.
 
-> **오픈소스 사용:** 오픈 소스를 이용한 AVCaputure와 CoreML - Vision 프레임 워크 사용 
+> **오픈소스 사용:** 오픈 소스를 이용한 AVCaputure와 CoreML - Vision 프레임 워크 사용
+> [오픈소스 링크](https://developer.apple.com/documentation/vision/classifying_images_with_vision_and_core_ml)
 
 <br>
 <br>
@@ -1156,5 +1163,4 @@ class ImageCollectionViewController: UIViewController, UICollectionViewDataSourc
 
 나머지의 과정은 `오늘의 레시피`와 똑같은 과정을 거쳐 화면에 디스플레이 해줬습니다.
 
-### 6 - 2. 결과 화면
 
