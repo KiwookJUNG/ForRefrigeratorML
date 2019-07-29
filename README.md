@@ -19,7 +19,7 @@
 ### 서비스 설명
 
 
-냉장고 속 **식재료**를 **Vision 프레임워크**를 사용하여 인식하고 인식한 식재료를 바탕으로 서버로부터 **레시피**를 받아와 사용자에게 제공해주는 애플리케이션
+냉장고 속 **식재료**를 **Vision 프레임워크**를 사용하여 인식하고 인식한 식재료를 바탕으로 서버와  **레시피**를 받아와 사용자에게 제공해주는 애플리케이션
 <br>
 <br>
 
@@ -136,10 +136,11 @@
 <br>
 
 ```swift
-@IBOutlet weak var collectionView: UICollectionView!
+	@IBOutlet weak var collectionView: UICollectionView!
+	
+	. . .
 
-
-            for food in today {
+        for food in today {
                 let f = food as! NSDictionary
                 
                 self.foodImage.append(f["dimage"] as? String)
@@ -148,7 +149,7 @@
                 DispatchQueue.main.async {
                     self.collectionView.reloadData()
                 }
-           }
+         }
 ```
 
 - 해결 방법 : 스토리 보드에서 `Collection View` 를 `@IBOutlet` 변수로 연결해 준 뒤 메인 스레드에서 비동기 방식으로 `reloadData()`를 실시해줬습니다.
@@ -208,7 +209,7 @@ public protocol UICollectionViewDataSource : NSObjectProtocol {
 - 위는 `UICollectionViewDataSource` 프로토콜의 정의 구문 중 일부 입니다. 
 
 가장 위의 두 메소드인 `collectionView(_:numberOfItemsInSection:)` 메소드와 
-`collectionView(_:cellForItemAt:)` 메소드는 정의 구문인 func 앞에 아무런 구문도 붙어있지 않습니다.
+`collectionView(_:cellForItemAt:)` 메소드는 정의 구문인 `func` 앞에 아무런 구문도 붙어있지 않습니다.
 
 이 프로토콜을 채택한 객체는 반드시 두 메소드를 구현해줘야 프로토콜 명세에 맞춘 올바른 구현이라고 할 수 있습니다.
 
@@ -236,9 +237,9 @@ public protocol UICollectionViewDataSource : NSObjectProtocol {
 
 [이미지 출처](https://developer.apple.com/documentation/uikit/uiviewcontroller?source=post_page)
 
-<br>
 
-뷰가 메모리에 로드되고 난 이후 뷰의 생명 주기는 위의 그림과 같습니다.
+
+- 뷰가 메모리에 로드되고 난 이후 뷰의 생명 주기는 위의 그림과 같습니다.
 
 각각의 상태는 다음을 의미합니다.
 
@@ -263,7 +264,7 @@ public protocol UICollectionViewDataSource : NSObjectProtocol {
 
 Vision 프레임워크를 사용해 머신러닝 모델로 객체를 인식하고 객체의 위치를 파악하여 사용자에게 어떤 식재료가 있는지 보여주는 화면입니다.
 
-> **오픈소스 사용:** 오픈 소스를 이용한 AVCaputure와 CoreML - Vision 프레임 워크 사용
+> **오픈소스 사용:** 오픈 소스를 이용한 AVCaputure와 CoreML - Vision 프레임워크 사용
 > [오픈소스 링크](https://developer.apple.com/documentation/vision/recognizing_objects_in_live_capture)
 
 <br>
@@ -282,7 +283,7 @@ Vision 프레임워크를 사용해 머신러닝 모델로 객체를 인식하�
 private let session = AVCaptureSession()
 ```
 
-- `AVCaptureSession()`은 디바이스로 부터 들어오는 인풋부터 캡쳐 아웃풋까지 데이터의 흐름을 조직화하고 캡쳐활동을 관리하는 객체입니다.
+- `AVCaptureSession()`은 디바이스로 부터 들어오는 캡쳐 인풋부터 캡쳐 아웃풋까지 데이터의 흐름을 조직화하고 캡쳐 활동을 관리하는 객체입니다.
 
 <br>
 <br>
@@ -299,20 +300,20 @@ private let session = AVCaptureSession()
 
 위의 과정을 자세히 서술하자면 다음과 같습니다.
 
-모든 `캡쳐 세션`은 적어도 하나의 `캡쳐 인풋{Input)`과 `아웃풋(Output)`이 있습니다. 
+모든 `캡쳐 세션`은 적어도 하나의 `캡쳐 인풋(Input)`과 `캡쳐 아웃풋(Output)`이 있습니다. 
 
-캡쳐 인풋은 대게 아이폰의 디바이스로 부터 들어오는 동영상이며 캡쳐 아웃풋은 그것을 가공한 비디오와 같은 것입니다.
+`캡쳐 인풋`은 대게 아이폰의 디바이스로 부터 들어오는 `동영상`이며 `캡쳐 아웃풋`은 그것을 가공한 `비디오`와 같은 것입니다.
 
 <br>
 <br>
 
 ```swift
 	// 인풋을 위한 디바이스를 선택합니다.
-        // 후면 카메라를 이용한 비디오를 AVCaputreDevice에 이용한다.
+        // 후면 카메라를 이용한 비디오를 AVCaputreDevice에 이용합니다.
         let videoDevice = AVCaptureDevice.DiscoverySession(deviceTypes: [.builtInWideAngleCamera], mediaType: .video, position: .back).devices.first
 ```
 
-이러한 인풋을 사용하기위해서는 `AVCaputreDevice`를 통해 `AVCaputreSession` 객체에 사용될 디바이스를 등록해줘야 합니다.
+이러한 인풋을 사용하기위해서는 `AVCaputreDevice`를 통해 `AVCaputreSession` 객체에 사용될 `디바이스를 등록`해줘야 합니다.
 
 <br>
 <br>
@@ -332,14 +333,14 @@ private let session = AVCaptureSession()
 
 `AVCaptureDeviceInput(device:)` 메소드와 `addInput()`메소드를 사용하여 디바이스의 인풋을 캡쳐 세션에 등록해줍니다.
 
-실시간 객체 인식을 하기 위해서는 `Video 데이터(아웃풋)`를 `큐`에 저장해야 합니다.
+Vision 프레임워크를 사용해 이미지 분석을 하기 위해서는 `Video 데이터(아웃풋)`를 `큐`에 저장해야 합니다.
 
 큐에 저장되면 `델리게이트 메소드`가 호출됩니다.
 
 <br>
 <br>
 
-델리게이트 메소드인 
+`델리게이트 메소드`인 
 
 ```swift
 func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection)
@@ -347,7 +348,7 @@ func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBu
 
 가 해주는 역할은 `AVCaputureSession`에 아웃풋(여기서는 큐)의 데이터를 파라미터로 받아서
 
-Vision 프레임워크의 메소드들을 사용해 아웃풋에 적절한 처리를 거쳐서 결과 값을 리턴해주는 역할입니다.
+`Vision 프레임워크`의 메소드들을 사용해 아웃풋에 적절한 처리를 거쳐서 결과 값을 리턴해주는 역할입니다.
 
 <br>
 <br>
@@ -359,7 +360,7 @@ Vision 프레임워크의 메소드들을 사용해 아웃풋에 적절한 처�
     	private let videoDataOutputQueue = DispatchQueue(label: "VideoDataOutput", qos: .userInitiated, attributes: [], autoreleaseFrequency: .workItem)
 ```
 
-위와 같이 비디오 아웃풋을 관리하는 큐를 DispatchQueue를 사용하여 만들어줘야 합니다.
+위와 같이 비디오 아웃풋을 관리하는 큐를 `DispatchQueue`를 사용하여 만들어줘야 합니다.
 
 <br>
 <br>
@@ -378,9 +379,9 @@ Vision 프레임워크의 메소드들을 사용해 아웃풋에 적절한 처�
 
 위의 코드는 세션에 비디오데이터 아웃풋을 `addOutput()` 메소드를 사용해 연결 해주고 그 비디오데이터 아웃풋 객체에 `setSampleBufferDelegate(_:queue:)` 메소드를 사용해 큐 버퍼와 델리게이트 객체를 등록해주는 과정입니다.
 
-즉, 비디오 아웃풋에 동영상이 저장될 큐를 등록하여 세션에 등록해 준것 입니다.
+즉, `비디오 아웃풋`에 동영상이 저장될 큐를 등록하여 세션에 등록해 준것 입니다.
 
-그러면, 디바이스로 부터 들어오는 인풋은 캡쳐 세션에 의해 관리됩니다.
+그러면, 디바이스로 부터 들어오는 인풋은 `캡쳐 세션`에 의해 관리됩니다.
 
 <br>
 <br>
@@ -438,7 +439,7 @@ Vision 프레임워크의 메소드들을 사용해 아웃풋에 적절한 처�
 
 이미지 분석을 위해서 `CoreML`을 사용하기 위해서 지원되는 `프레임워크`는 `Vision 프레임워크` 입니다.
 
-`CoreML`이 하는 역할은 디바이스에 내장된 머신러닝 모델을 최적화 하고 메모리와 파워의 소모를 최소화하는데 있습니다.
+`CoreML`이 하는 역할은 디바이스에 내장된 `머신러닝 모델을 최적화` 하고 `메모리와 파워의 소모를 최소화`하는데 있습니다.
 
 또한 `CoreML`을 사용하는 것에 대한 이점은 머신러닝 모델을 사용해 분석을 하기위해 서버와 통신을 하지 않아도 된다는 점에 있습니다.
 
@@ -522,7 +523,7 @@ let objectRecognition = VNCoreMLRequest(model: visionModel, completionHandler: {
             })
 ```
 
-4. 이미지 분석 결과값, 사용 : `VNCoreMLModelRequest`가 `VNImageReqeustHandler.perform()`에 의해 실행된 결과는 `VNRecognizedOjbectObservation`의 타입으로 리턴됩니다.
+4. 이미지 분석 결괏값 사용 : `VNCoreMLModelRequest`가 `VNImageReqeustHandler.perform()`에 의해 실행된 결과는 `VNRecognizedOjbectObservation`의 타입으로 리턴됩니다.
 
 위의 코드에서, `VNCoreMLRequest`는 `VNImageRequestHandler.perform()`에 의해서 실행됩니다.
 
@@ -557,11 +558,14 @@ let objectRecognition = VNCoreMLRequest(model: visionModel, completionHandler: {
 
 
 - 위의 이미지는 이미지를 분석하는 `Vision 프레임워크`의 `워크 플로우` 입니다.
+<br>
 
 위에서 서술한 2번 부터 4번의 순서와 같이 ( 1번은 ML Model을 선택하는 과정이라 이미지에서는 제외돼있습니다.)
 
 `MLMode을 사용한 요청(Request)` -> `요청 핸들러를 사용한 요청 실행(RequestHandler)` -> `결과값 반환(Observations)` 의 형태로 이루어 집니다.
 
+<br>
+<br>
 
 > **정리 : 최종 흐름**
 >
@@ -591,6 +595,7 @@ let objectRecognition = VNCoreMLRequest(model: visionModel, completionHandler: {
 ￼[이미지 출처](https://www.oodlestechnologies.com/blogs/Brief-About-Delegation-Design-pattern-in-Swift/)
 
 - 델리게이션은 위의 그림과 같이 `Object 1`이 처리할 수 있는 일을 `Object 2`에 위임하고 특정 이벤트가 발생하면 `Obejct 2`가 일을 처리해주는 것을 말합니다.
+<br>
 
 `Object 1`을 `일을 위임하는 객체`라고 하고 `Object 2`를 `델리게이트 객체`라고 합니다.
 
@@ -598,12 +603,12 @@ let objectRecognition = VNCoreMLRequest(model: visionModel, completionHandler: {
 
 그러므로 `Object 1`이 할 수 있는 일을 `Object 2`에 구현 해두고 필요한 시점에 호출할 수 있습니다.
 
-즉, `하나의 객체(Object 1)`가 모든일을 처리하는 것이 아니라 처리해야 할일 중 일부를 `다른 객체(Object 2)`에 넘기는 것이 델리게이트 패턴입니다.
+즉, `하나의 객체(Object 1)`가 모든일을 처리하는 것이 아니라 처리해야 할 일 중 일부를 `다른 객체(Object 2)`에 넘기는 것이 델리게이트 패턴입니다.
 
 <br>
 <br>
 
-프로젝트에서는 동영상이 샘플 버퍼에 저장되는 이벤트가 일어날때 마다 이미지 처리 부분(`Vision 프레임워크를 사용한 이미지 분석`)을 다른 객체에 위임하여 동영상을 저장해주는 부분과 이미지를 처리해주는 부분을 나누어줬습니다.
+프로젝트에서는 동영상이 `샘플 버퍼에 저장되는 이벤트`가 일어날때 마다 이미지 처리 부분(`Vision 프레임워크를 사용한 이미지 분석`)을 다른 객체에 위임하여 `동영상을 저장해주는 부분`과 `이미지를 처리해주는 부분`을 나누어줬습니다.
 
 
 ![델리게이트](https://user-images.githubusercontent.com/47555993/62002818-1aaf4800-b147-11e9-98c5-f02419e48225.PNG)
@@ -647,7 +652,7 @@ class CameraVC : UIViewController, AVCaptureVideoDataOutputSampleBufferDelegate 
 
 `videoDataOutput`에 저장될 데이터를 받아줄 버퍼를 설정해 주고, `videoDataOutput` 대신에 일을 처리해줄 객체 (CameraVC를 의미합니다,)를 등록해주는 코드입니다.
 
-이제, `videoDataOutput` 객체에 등록해준 버퍼에 동영상 데이터가 저장되는 순간 델리게이트로 지정한 객체에게 시스템은 이 사실을 알려줍니다.
+이제, `videoDataOutput` 객체에 등록해준 버퍼에 동영상 데이터가 저장되는 순간 `델리게이트로 지정한 객체`에게 시스템은 이 사실을 알려줍니다.
 
 <br>
 <br>
@@ -679,11 +684,11 @@ class ObjectDetectionVC: CameraVC {
 
 이벤트가 발생하면 `CameraVC 객체`(여기서는 `CameraVC`를 상속받은 `ObjectDetectionVC`가 처리합니다.) 는 이 사실을 알게되고 `videoDataOutput`에게 위임 받은 일을 처리 합니다. ( `captureOutput(_:didOutput:from:)` 메소드를 실행 함으로써 위임 받은 일을 처리 합니다,)
 
-즉, `videoDataOutput`이 동영상 데이터를 저장하는 일과 동영상의 이미지를 분석하는 일 두가지를 나누어서 동영상의 이미지를 분석하는 일을 다른 객체에 위임을 한 것입니다.
+즉, `videoDataOutput`이 `동영상 데이터를 저장하는 일`과 동영상의 `이미지를 분석하는 일` 두가지를 나누어서 동영상의 `이미지를 분석하는 일`을 **다른 객체에 위임**을 한 것입니다.
 
 코드에서는 `captureOutput(_:didOutput:from)` 메소드에서 `VNImageRequestHandler`가 미리 세팅된 요청을 실행해주는 역할을 하고 있습니다.
 
-그러므로, 동영상이 버퍼에 저장되면 앞서 세팅되었던 이미지 분석 요청을 실행하는 일을 `videoDataOutput`이 하지않고 다른 객체(델리게이트 객체)에 위임해서 실시해주는 것입니다.
+그러므로, 동영상이 버퍼에 저장되면 앞서 세팅되었던 이미지 분석 요청을 실행하는 일을 `videoDataOutput`이 하지않고 **다른 객체(델리게이트 객체)에 위임해서 실시해주는 것입니다.**
 
 **이러한 델리게이트 패턴의 이점은 하나의 객체가 모든일을 처리하지 않기 때문에 기능 단위로 일을 나누기 쉽고 또한 시스템이 일을 처리해야할 시점을 알려주므로 간편하다는 장점이 있습니다.**
 
@@ -699,7 +704,7 @@ class ObjectDetectionVC: CameraVC {
 ![클래지프](https://user-images.githubusercontent.com/47555993/61995616-bac48d00-b0c5-11e9-8508-11726400cab5.gif)
 
 
-Vision 프레임워크를 사용해 머신러닝 모델로 객체를 분류하고 사용자가 어떤 식재료가 있는지 화면을 통해 인식할 수 있도록 보여주는 화면입니다.
+- Vision 프레임워크를 사용해 머신러닝 모델로 객체를 분류하고 사용자가 어떤 식재료가 있는지 화면을 통해 인식할 수 있도록 보여주는 화면입니다.
 
 > **오픈소스 사용:** 오픈 소스를 이용한 AVCaputure와 CoreML - Vision 프레임 워크 사용
 > [오픈소스 링크](https://developer.apple.com/documentation/vision/classifying_images_with_vision_and_core_ml)
@@ -761,7 +766,7 @@ Vision 프레임워크를 사용해 머신러닝 모델로 객체를 분류하�
 
 4. (차이점) 이미지 분석 결과값 사용 : `VNCoreMLModelRequest`가 `VNImageReqeustHandler.perform()`에 의해 실행된 결과는 `VNRecognizedOjbectObservation` 타입이 아니라 `VNClassificationObservation` 타입입니다.
 
-왜냐하면 1번 ML 모델 설정 과정에서 ML 모델을 설정하는 과정은 공통적인 과정이었지만 실제로 선택한 ML 모델은 다른 모델이기 때문입니다.
+왜냐하면 `1번 ML 모델` 설정 과정에서 ML 모델을 설정하는 과정은 공통적인 과정이었지만 실제로 **선택한 ML 모델은 다른 모델**이기 때문입니다.
 
 <br>
 <br>
@@ -806,9 +811,9 @@ Vision 프레임워크를 사용해 머신러닝 모델로 객체를 분류하�
 <img width="300"  src="https://user-images.githubusercontent.com/47555993/61995619-bb5d2380-b0c5-11e9-9ebb-bc18cf69aa35.PNG">
 </div>
 
-위와 같이 카메라에 인식을 하면 물체의 라벨과 정확도가 나오는 화면입니다.
+- 위와 같이 카메라에 인식을 하면 물체의 라벨과 정확도가 나오는 화면입니다.
 
-하지만 카메라가 비추는 화면만 보여주는 뷰는 사용자가 느끼기에 무엇을 인식 시켜야 하는지 어디에다가 인식시켜야 하는지 선뜻 이해하기 어려울 수 있기 때문에두 번째 이미지와 같이 파란색의 사각형의 `Layer`를 추가해줬습니다. 
+하지만 카메라가 비추는 화면만 보여주는 뷰는 사용자가 느끼기에 무엇을 인식 시켜야 하는지 어디에다가 인식시켜야 하는지 선뜻 이해하기 어려울 수 있기 때문에 두 번째 이미지와 같이 파란색의 사각형의 `Layer`를 추가해줬습니다. 
 
 그리고 `‘물체를 올려주세요.’`와 같은 사용자의 행동을 유도하는 라벨을 배치하였습니다.
 
@@ -912,12 +917,17 @@ previewLayer.addSublayer(rectView.layer)
         }
 ```
 
-위의 코드는 `VNCoreMLRequest` 부분 (이미지 분석 요청) 하는 부분에서 실제로 `Reuqest`가 실행되었을 때 실행되는 클로져입니다.
+- 위의 코드는 `VNCoreMLRequest` 부분 (이미지 분석 요청) 하는 부분에서 실제로 `Reuqest`가 실행되었을 때 실행되는 클로져입니다.
 
 `VNCoreMLRequestHandler`에 의해 요청이 실행되면 클로져 또한 함께 실행되는데, 해당하는 클로저는 `VNClassificationObservation` 배열의 첫번째 결과 값이 일정 인식률(95%)를 넘으면 식재료가 인식되었다고 파악하고
 `hasIngredient`라는 배열에 추가를 해주는 코드입니다.
 
 그러므로, 사용자가 카메라를 통해 인식시킨 식재료가 95%의 정확도를 상회하면 인식된 식재료로 파악하고 인식된 식재료로 배열에 추가를 해줬습니다.
+
+<br>
+
+![클래지프](https://user-images.githubusercontent.com/47555993/61995616-bac48d00-b0c5-11e9-8508-11726400cab5.gif)
+- 달걀의 인식률이 95퍼센트를 넘으면 사용자가 인식할 수 있도록 인식한 재료를 출력해주는 예제
 
 
 <br>
@@ -951,7 +961,7 @@ previewLayer.addSublayer(rectView.layer)
 <img width="300" src="https://user-images.githubusercontent.com/47555993/61995612-ba2bf680-b0c5-11e9-96dc-d69a137a5092.PNG">
 </div>
 
-실시간 객체 인식 또는 객체 분류로 냉장고의 식재료를 인식한 다음 사용자에게 인식한 재료를 보여주는 뷰 입니다.
+- 실시간 객체 인식 또는 객체 분류로 냉장고의 식재료를 인식한 다음 사용자에게 인식한 재료를 보여주는 뷰 입니다.
 
 사용자는 **원하는 식재료**를 선택하고, 선택한 식재료를 다음 뷰 컨트롤러(사용자가 선택한 식재료를 서버로 보내고 그에 따른 레시피를 추천 받는 뷰 컨트롤러 입니다.) 로 넘겨주게 됩니다.
 
